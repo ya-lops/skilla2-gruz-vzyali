@@ -1,0 +1,31 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Partners from "@/components/sections/Partners.astro";
+import Services from "@/components/sections/Services.astro";
+import CalculatorForm from "@/components/sections/CalculatorForm.astro";
+import Blog from "@/components/sections/Blog.astro";
+import KP from "@/components/sections/KP.astro";
+import FAQ from "@/components/sections/FAQ.astro";
+
+import { getBrandData } from "@/lib/api";
+import HeroMain from "@/components/sections/HeroMain.astro";
+
+const brandData = await getBrandData();
+---
+
+<BaseLayout brandData={brandData}>
+  <HeroMain {brandData} />
+  <div class="container">
+    <div class="flex flex-col md:flex-row gap-8 p-4 lg:p-10 rounded-[20px] lg:rounded-[40px] bg-surface-secondary">
+      <h2 class="typo-h3-x2 uppercase">Наши клиенты</h2>
+      <div class="md:my-6">
+        <Partners {brandData} />
+      </div>
+    </div>
+  </div>
+  <Services media="image" {brandData} />
+  <CalculatorForm {brandData} />
+  <Blog {brandData} />
+  <KP {brandData} />
+  <FAQ {brandData} />
+</BaseLayout>

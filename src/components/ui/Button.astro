@@ -1,0 +1,58 @@
+---
+export interface Props {
+  tag?: "a" | "button";
+  class?: string;
+  type?: any;
+  text?: string;
+  variant?: "primary" | "secondary" | "accent";
+  inverse?: boolean;
+  arrow?: "left" | "right";
+  href?: string;
+}
+
+const { tag: Tag = "a", type, text, class: Classname, variant = "primary", inverse = false, arrow, href, ...rest } = Astro.props;
+
+// Базовые классы
+const baseClasses =
+  "inline-flex items-center justify-center gap-2.5 h-[2.625rem] lg:h-[3.25rem] px-5 rounded font-medium cursor-pointer transition-all duration-250 typo-button";
+
+// Классы для разных типов
+const variantClasses = {
+  accent: inverse
+    ? "bg-button-accent-inverse-surface hover:bg-button-accent-inverse-surface_hover text-button-accent-inverse-text hover:text-button-accent-inverse-text_hover border border-button-accent-inverse-border hover:border-button-accent-inverse-border_hover"
+    : "bg-button-accent-surface hover:bg-button-accent-surface_hover text-button-accent-text hover:text-button-accent-text_hover border border-button-accent-border hover:border-button-accent-border_hover",
+  primary: inverse
+    ? "bg-button-primary-inverse-surface hover:bg-button-primary-inverse-surface_hover text-button-primary-inverse-text hover:text-button-primary-inverse-text_hover border border-button-primary-inverse-border hover:border-button-primary-inverse-border_hover"
+    : "bg-button-primary-surface hover:bg-button-primary-surface_hover text-button-primary-text hover:text-button-primary-text_hover border border-button-primary-border hover:border-button-primary-border_hover",
+  secondary: inverse
+    ? "bg-button-secondary-inverse-surface hover:bg-button-secondary-inverse-surface_hover text-button-secondary-inverse-text hover:text-button-secondary-inverse-text_hover border border-button-secondary-inverse-border hover:border-button-secondary-inverse-border_hover"
+    : "bg-button-secondary-surface hover:bg-button-secondary-surface_hover text-button-secondary-text hover:text-button-secondary-text_hover border border-button-secondary-border hover:border-button-secondary-border_hover",
+};
+
+const buttonClasses = `${baseClasses} ${variantClasses[variant]}`;
+---
+
+<Tag {type} class:list={[buttonClasses, Classname]} {href} {...rest}>
+  {
+    arrow === "left" && (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M11.6073 4.10724C11.9327 3.78188 12.4603 3.78205 12.7857 4.10724L18.0893 9.41078C18.4147 9.73622 18.4147 10.2637 18.0893 10.5892L12.7857 15.8927C12.4603 16.2179 11.9327 16.2181 11.6073 15.8927C11.282 15.5674 11.2822 15.0398 11.6073 14.7143L15.4884 10.8333L2.50008 10.8333C2.03984 10.8333 1.66675 10.4602 1.66675 9.99998C1.66675 9.53974 2.03984 9.16664 2.50008 9.16664L15.4884 9.16664L11.6073 5.28562C11.2822 4.96016 11.282 4.43259 11.6073 4.10724Z"
+          fill="currentcolor"
+        />
+      </svg>
+    )
+  }
+  {text && <span>{text}</span>}
+  <slot />
+  {
+    arrow === "right" && (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M11.6073 4.10724C11.9327 3.78188 12.4603 3.78205 12.7857 4.10724L18.0893 9.41078C18.4147 9.73622 18.4147 10.2637 18.0893 10.5892L12.7857 15.8927C12.4603 16.2179 11.9327 16.2181 11.6073 15.8927C11.282 15.5674 11.2822 15.0398 11.6073 14.7143L15.4884 10.8333L2.50008 10.8333C2.03984 10.8333 1.66675 10.4602 1.66675 9.99998C1.66675 9.53974 2.03984 9.16664 2.50008 9.16664L15.4884 9.16664L11.6073 5.28562C11.2822 4.96016 11.282 4.43259 11.6073 4.10724Z"
+          fill="currentcolor"
+        />
+      </svg>
+    )
+  }
+</Tag>

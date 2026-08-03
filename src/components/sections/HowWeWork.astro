@@ -1,0 +1,79 @@
+---
+import type { BrandData } from "@/types/brand";
+
+interface Props {
+  brandData: BrandData;
+  type: "cards" | "timeline" | "flow";
+}
+
+const { brandData, type = "cards" } = Astro.props;
+
+const stepsImages = [
+  {
+    title: "Делайте заказ по телефону",
+    image: "/images/how-1.webp",
+  },
+  {
+    title: "Выставляем счет и вы оплачиваете",
+    image: "/images/how-2.webp",
+  },
+  {
+    title: "Выполняем качественно работу",
+    image: "/images/how-3.webp",
+  },
+  {
+    title: "Вы получаете документы",
+    image: "/images/how-4.webp",
+  },
+];
+
+const stepsIcons = [
+  {
+    title: "Делайте заказ по телефону",
+    image:
+      '<svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="9" width="40" height="66" rx="7" fill="#17334E"/><rect x="23" y="19" width="38" height="43" fill="#ECECF3" stroke="#17334E" stroke-width="2"/><line x1="22" y1="19" x2="62" y2="19" stroke="#ECECF3" stroke-width="2"/><line x1="22" y1="62" x2="63" y2="62" stroke="#ECECF3" stroke-width="2"/><circle cx="42" cy="68" r="3" fill="#ECECF3"/><rect x="37" y="13" width="10" height="3" rx="1.5" fill="#ECECF3"/></svg>',
+  },
+  {
+    title: "Выставляем счет и вы оплачиваете",
+    image:
+      '<svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 13C18 10.7909 19.7909 9 22 9H62C64.2091 9 66 10.7909 66 13V59H18V13Z" fill="#17334E"/><path d="M19 61V74.5112C19 75.4124 20.0984 75.8538 20.722 75.2031L24.0908 71.6879C24.4599 71.3027 25.0664 71.2751 25.469 71.6252L29.8438 75.4294C30.2201 75.7566 30.7799 75.7566 31.1562 75.4294L35.5938 71.5706C35.9701 71.2434 36.5299 71.2434 36.9062 71.5706L41.3438 75.4294C41.7201 75.7566 42.2799 75.7566 42.6562 75.4294L47.0938 71.5706C47.4701 71.2434 48.0299 71.2434 48.4062 71.5706L52.8438 75.4294C53.2201 75.7566 53.7799 75.7566 54.1562 75.4294L58.531 71.6252C58.9336 71.2751 59.5401 71.3027 59.9092 71.6879L63.278 75.2031C63.9016 75.8538 65 75.4124 65 74.5112V61" stroke="#17334E" stroke-width="2"/><rect x="30" y="23" width="16" height="3" rx="1.5" fill="#ECECF3"/><rect x="30" y="29" width="24" height="3" rx="1.5" fill="#ECECF3"/></svg>',
+  },
+  {
+    title: "Выполняем качественно работу",
+    image:
+      '<svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42.0303 13.791C57.6094 13.7913 70.2391 28.5255 70.2393 46.7012C70.2393 47.3981 70.2173 48.0902 70.1807 48.7764C63.2903 55.5768 53.2336 59.8651 42.0303 59.8652C30.8264 59.8652 20.7684 55.5772 13.8779 48.7764C13.8413 48.0902 13.8213 47.3981 13.8213 46.7012C13.8214 28.5254 26.451 13.791 42.0303 13.791Z" fill="#17334E"/><path d="M16.0299 46L15.7 46.545C13.4202 50.3121 13.3866 55.0253 15.6126 58.8245L21.008 68.0332C22.0847 69.8709 24.055 71 26.1848 71H57.8152C59.945 71 61.9153 69.8709 62.992 68.0332L68.1646 59.2047C70.5071 55.2067 70.3384 50.2173 67.7313 46.3867L67.5224 46.0797" stroke="#17334E" stroke-width="2"/><path d="M52.7645 16H31.2355C29.2368 16 27.5448 17.4754 27.2728 19.4556L25.6243 31.4556C25.2942 33.8586 27.1615 36 29.5871 36H54.4129C56.8385 36 58.7058 33.8586 58.3757 31.4556L56.7272 19.4556C56.4552 17.4754 54.7632 16 52.7645 16Z" fill="#ECECF3"/><path d="M59 36L56.7272 19.4556C56.4552 17.4754 54.7632 16 52.7645 16H31.2355C29.2368 16 27.5448 17.4754 27.2728 19.4556L25 36" stroke="#17334E" stroke-width="2" stroke-linecap="round"/><path d="M45.6405 13H38.3595C36.2993 13 34.5761 14.5648 34.3781 16.6154L32 41.2353L37.0674 43.143C40.2469 44.34 43.7531 44.34 46.9326 43.143L52 41.2353L49.6219 16.6154C49.4239 14.5648 47.7006 13 45.6405 13Z" fill="#ECECF3"/><path d="M52 41L49.6246 16.6122C49.425 14.563 47.7024 13 45.6434 13H38.3566C36.2976 13 34.575 14.563 34.3754 16.6122L32 41" stroke="#17334E" stroke-width="2" stroke-linecap="round"/></svg>',
+  },
+  {
+    title: "Вы получаете документы",
+    image:
+      '<svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 13C18 10.7909 19.7909 9 22 9H47.4137C48.4326 9 49.4132 9.38886 50.1552 10.0872L64.7415 23.8155C65.5446 24.5714 66 25.6254 66 26.7283V71C66 73.2091 64.2091 75 62 75H22C19.7909 75 18 73.2091 18 71V13Z" fill="#17334E"/><path d="M49 9V23C49 24.1046 49.8954 25 51 25H66" stroke="#ECECF3" stroke-width="2"/><rect x="26" y="54" width="16" height="3" rx="1.5" fill="#ECECF3"/><rect x="26" y="60" width="24" height="3" rx="1.5" fill="#ECECF3"/></svg>',
+  },
+];
+---
+
+<section class="how-we-work py-8 md:py-10 lg:py-20 bg-surface-secondary" data-cmp="HowWeWork">
+  <div class="container">
+    <div class="_how-we-work-inner">
+      <h2 class="_how-we-work-title pb-16">Как мы работаем</h2>
+
+      <div class="_how-we-work-grid grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {
+          stepsImages.map((step: any, index: number) => (
+            <div class="_how-we-work_step flex lg:flex-col items-center lg:items-start gap-2 lg:gap-7 rounded-x bg-surface-primary overflow-clip">
+              <div class="_content p-8">
+                <div class="_number mb-6 text-text-tertiary text-left typo-h3">{index + 1}.</div>
+                <h3 class="_title typo-t1 text-left balance">{step.title}</h3>
+              </div>
+              <img
+                class="_image order-first max-w-[33%] lg:order-last mt-auto pointer-events-none"
+                src={step.image}
+                alt=""
+                loading="lazy"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

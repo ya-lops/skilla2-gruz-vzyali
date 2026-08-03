@@ -1,0 +1,39 @@
+---
+export interface Props {
+  id: string;
+  label: string;
+  model?: string;
+  unit?: string;
+  step?: string;
+  min?: string;
+  max?: string;
+  class?: string;
+}
+
+const { id, label, model = "", unit = "", step = "1", min = "0", max = "100", class: className = "" } = Astro.props;
+
+const sliderStyle = `\`width: \${(((${model} - ${min}) / (${max} - ${min})) * 100)}%\``;
+---
+
+<div class="flex flex-col gap-5" data-cmp="CalcInput">
+  <label for={id} class="_label text-text-tertiary typo-t4">{label}</label>
+
+  <div class="relative w-full h-[6px] rounded-full bg-outline">
+    <div class="h-full rounded-full bg-accent transition-all duration-150" x-bind:style={sliderStyle}></div>
+    <input
+      type="range"
+      x-model.number={model}
+      min={min}
+      max={max}
+      step={step}
+      class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-4 appearance-none bg-transparent cursor-pointer
+          [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[14px] [&::-webkit-slider-thumb]:h-[23px] [&::-webkit-slider-thumb]:rounded-sm [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:shadow-sm
+          [&::-moz-range-thumb]:w-[14px] [&::-moz-range-thumb]:h-[23px] [&::-moz-range-thumb]:rounded-sm [&::-moz-range-thumb]:bg-accent [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
+    />
+  </div>
+
+  <div class="flex items-baseline">
+    <input id={id} type="number" class="_value flex-1 outline-0" x-model.number={model} step={step} min={min} max={max} />
+    {unit && <span class="_unit text-text-tertiary typo-label">{unit}</span>}
+  </div>
+</div>

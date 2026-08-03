@@ -1,0 +1,204 @@
+@import "tailwindcss";
+@import "./fonts.css";
+@import "./theme.css";
+
+@utility container {
+  max-width: calc(1400px + 2rem);
+}
+
+:root {
+  --site-font-base: 'Golos Text', sans-serif;
+  --site-font-heading: 'Alumni Sans', sans-serif;
+}
+
+@utility font-base {
+  font-family: var(--site-font-base);
+}
+
+@utility font-heading {
+  font-family: var(--site-font-heading);
+}
+
+@utility add-gradient {
+  background: linear-gradient(to bottom, #ffaf68 0%, #f07a51 100%);
+}
+
+/* ===== HEADLINE (fluid, 375px → 1440px) ===== */
+
+@utility typo-h1 {
+  font-family: var(--site-font-heading);
+  font-weight: 600;
+  font-size: clamp(1.875rem, 0.9067rem + 4.1315vw, 4.625rem);
+  line-height: 110%;
+}
+
+@utility typo-h1-x2 {
+  font-family: var(--site-font-heading);
+  font-weight: 600;
+  font-size: clamp(3.75rem, 1.8134rem + 8.263vw, 9.25rem);
+  line-height: 80%;
+}
+
+@utility typo-h2 {
+  font-family: var(--site-font-heading);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 0.7518rem + 3.1925vw, 3.625rem);
+  line-height: 120%;
+}
+
+@utility typo-h2-x2 {
+  font-family: var(--site-font-heading);
+  font-weight: 600;
+  font-size: clamp(3rem, 1.5036rem + 6.385vw, 7.25rem);
+  line-height: 80%;
+}
+
+@utility typo-h3 {
+  font-family: var(--site-font-heading);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 0.9419rem + 1.3146vw, 2.125rem);
+  line-height: 120%;
+}
+
+@utility typo-h3-x2 {
+  font-family: var(--site-font-heading);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.8838rem + 2.6292vw, 4.25rem);
+  line-height: 80%;
+}
+
+@utility typo-h4 {
+  font-family: var(--site-font-heading);
+  font-weight: 700;
+  font-size: clamp(1.125rem, 0.993rem + 0.5634vw, 1.5rem);
+  line-height: 120%;
+}
+
+@utility typo-h4-x2 {
+  font-family: var(--site-font-heading);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 1.986rem + 1.1268vw, 3rem);
+  line-height: 80%;
+}
+
+@utility typo-h5 {
+  font-family: var(--site-font-heading);
+  font-weight: 700;
+  font-size: clamp(0.875rem, 0.743rem + 0.5634vw, 1.25rem);
+  line-height: 80%;
+  letter-spacing: 0%;
+}
+
+@utility typo-h5-x2 {
+  font-family: var(--site-font-heading);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.486rem + 1.1268vw, 2.5rem);
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+/* ===== UI (fluid, 375px → 1440px) ===== */
+
+@utility typo-label {
+  font-family: var(--site-font-base);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 0.706rem + 0.1878vw, 0.875rem);
+  line-height: 100%;
+  letter-spacing: 0.01em;
+}
+
+@utility typo-button {
+  font-family: var(--site-font-base);
+  font-weight: 400;
+  font-size: clamp(0.875rem, 0.831rem + 0.1878vw, 1rem);
+  line-height: 100%;
+}
+
+/* ===== TEXT (fluid, 375px → 1440px) ===== */
+
+@utility typo-t1 {
+  font-family: var(--site-font-base);
+  font-weight: 600;
+  font-size: clamp(1.125rem, 0.993rem + 0.5634vw, 1.5rem);
+  line-height: 130%;
+  letter-spacing: 0%;
+}
+
+@utility typo-t2 {
+  font-family: var(--site-font-base);
+  font-weight: 400;
+  font-size: clamp(1rem, 0.956rem + 0.1878vw, 1.125rem);
+  line-height: 130%;
+  letter-spacing: 0%;
+}
+
+@utility typo-t3 {
+  font-family: var(--site-font-base);
+  font-weight: 400;
+  font-size: clamp(0.875rem, 0.831rem + 0.1878vw, 1rem);
+  line-height: 130%;
+}
+
+@utility typo-t4 {
+  font-family: var(--site-font-base);
+  font-weight: 400;
+  font-size: clamp(0.75rem, 0.706rem + 0.1878vw, 0.875rem);
+  line-height: 120%;
+}
+
+@utility typo-t5 {
+  font-family: var(--site-font-base);
+  font-weight: 400;
+  font-size: clamp(0.625rem, 0.581rem + 0.1878vw, 0.75rem);
+  line-height: 120%;
+}
+
+@layer utilities {
+  h1 {
+    @apply typo-h1;
+  }
+
+  h2 {
+    @apply typo-h2;
+  }
+
+  h3 {
+    @apply typo-h3;
+  }
+
+  h4 {
+    @apply typo-h4;
+  }
+
+  h5 {
+    @apply typo-h5;
+  }
+}
+
+@layer base {
+  html {
+    font-size: 16px;
+    interpolate-size: allow-keywords;
+    overflow-y: overlay;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    color: var(--color-text-primary);
+    font-family: var(--site-font-base);
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 100%;
+  }
+
+  .container {
+    margin-inline: auto;
+    padding: 0 1rem;
+  }
+}
+
+[x-cloak] {
+  display: none !important;
+}

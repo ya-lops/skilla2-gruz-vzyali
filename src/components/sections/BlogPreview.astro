@@ -1,0 +1,47 @@
+---
+interface Props {
+  brandData: any;
+}
+
+import Button from "@/components/ui/Button.astro";
+
+const { brandData } = Astro.props;
+
+const blog = brandData.articles?.slice(0, 3) || [
+  {
+    slug: "post-1",
+    imagePreview: "/images/blogpost-1.webp",
+    title: "Название кейса",
+    description: "Для переезда, склада и стройки. Работаем с погрузчиками, штабелёрами, по доступной цене и без задержек.",
+    date_create: "12.03.2025",
+  },
+];
+---
+
+<section class="blog py-8 md:py-10 lg:py-20" data-cmp="BlogPreview">
+  <div class="container">
+    <div class="_blog-inner">
+      <h2 class="_blog-title mb-8 md:12 lg:mb-16 typo-h2">Наш блог</h2>
+      <div class="_blog-grid grid-cols-[1fr_1fr_1fr] gap-4">
+        {
+          blog.map((blogpost: any) => (
+            <article class="_blogpost flex flex-col items-start gap-4 text-left">
+              <a class="contents" href={`/blog/${blogpost.slug}`}>
+                <img
+                  src={blogpost.imagePreview || "/images/blogpost-1.webp"}
+                  alt={`Превью-изображение для записи блога ${blogpost.title}`}
+                />
+                <h3 class="_blogpost-title px-4 text-left">{blogpost.title}</h3>
+                <p class="_blogpost-description px-4">{blogpost.description}</p>
+                <div class="_blogpost-date px-4">{blogpost.date_create}</div>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+      <div class="_blog-actions flex items-center justify-center gap-4 mt-16">
+        <Button href="/blog" variant="secondary" arrow="right" text="Перейти в блог" />
+      </div>
+    </div>
+  </div>
+</section>

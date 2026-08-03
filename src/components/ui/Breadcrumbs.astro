@@ -1,0 +1,46 @@
+---
+export interface Props {
+  items: Array<{
+    label: string;
+    href?: string;
+  }>;
+  class?: string;
+}
+
+const { items = [], class: className = "" } = Astro.props;
+---
+
+<nav class:list={["py-1 lg:py-2", className]} aria-label="Хлебные крошки" data-cmp="Breadcrumbs">
+  <div class="container">
+    <ol class="flex items-center gap-3" itemscope itemtype="https://schema.org/BreadcrumbList">
+      {
+        items.map((item, index) => {
+          const isLast = index === items.length - 1;
+          const position = index + 1;
+
+          return (
+            <li class="flex items-center gap-3" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              {index > 0 && (
+                <span class="typo-t4 text-text-secondary" aria-hidden="true">
+                  /
+                </span>
+              )}
+
+              {isLast ? (
+                <span class="typo-t4 text-text-tertiary" itemprop="name">
+                  {item.label}
+                </span>
+              ) : (
+                <a class="typo-t4" href={item.href} itemprop="item">
+                  <span itemprop="name">{item.label}</span>
+                </a>
+              )}
+
+              <meta itemprop="position" content={String(position)} />
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</nav>

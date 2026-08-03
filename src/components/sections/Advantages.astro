@@ -1,0 +1,121 @@
+---
+import { getDiscountedPrice, getDiscountPercent, hasDiscount } from "@/utils/price";
+import IconSvg from "../IconSvg.astro";
+import CtaCall from "../blocks/CtaCall.astro";
+
+interface Props {
+  brandData: any;
+}
+
+const { brandData } = Astro.props;
+
+const discount = getDiscountPercent(brandData.main.adv_price_percent);
+
+const advantages = [
+  {
+    name: "Экспертность в области",
+    checked: true,
+  },
+  {
+    name: "Сезонность/проектность",
+    checked: false,
+  },
+  {
+    name: "Экономия на содержание сотрудников",
+    checked: false,
+  },
+  {
+    name: "Экономия ресурсов на подбор и замену",
+    checked: false,
+  },
+  {
+    name: "Белая экономия на налогах",
+    checked: false,
+  },
+  {
+    name: "Экономия на НДС",
+    checked: false,
+  },
+  {
+    name: "Отсутствие рисков кассового разрыва",
+    checked: false,
+  },
+];
+---
+
+<section class="py-8 md:py-10 lg:py-20" data-cmp="Advantages">
+  <div class="container">
+    <h2 class="mb-8 md:12 lg:mb-16">Преимущества сотрудничества с нами</h2>
+    <div
+      class="relative isolate grid grid-cols-1 gap-3 lg:gap-0 lg:grid-cols-[3fr_2fr_2fr] lg:p-3 lg:border lg:border-outline lg:rounded-xl"
+    >
+      <div class="grid grid-cols-2 lg:grid-cols-subgrid col-span-full">
+        <div class="contents lg:block"></div>
+        <div class="typo-h5 lg:text-table-highlight-heading text-center py-7 px-6 rounded-t-md">
+          Наша компания
+        </div>
+        <div class="typo-h5 text-center py-7 px-6">Штатные сотрудники</div>
+      </div>
+
+      <div
+        class="hidden lg:block absolute -z-1 top-3 bottom-3 left-3 right-3 col-start-2 col-end-3 rounded-lg pointer-events-none -mx-2 bg-table-highlight opacity-85 mix-blend-multiply"
+      >
+      </div>
+
+      {
+        advantages?.map((advantage: any) => (
+          <div class="_advantages-item relative grid grid-cols-2 lg:grid-cols-subgrid col-span-full items-center">
+            <div class="flex items-center w-full justify-center lg:justify-start text-center col-span-full lg:col-span-1">
+              <div class="typo-t2 p-6">{advantage.name}</div>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center p-5 pt-0 lg:p-6">
+                <IconSvg name="check" size={32} class="text-table-yes" />
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center p-5 pt-0 lg:p-6">
+                {advantage.checked ? (
+                  <IconSvg name="check" size={32} class="text-table-yes-accent" />
+                ) : (
+                  <IconSvg name="x" size={32} class="text-table-no" />
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 lg:mt-20">
+      <CtaCall {brandData} />
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  [data-cmp="Advantages"] {
+    ._advantages-item {
+      border-radius: 0.75rem;
+
+      &:nth-child(odd) {
+        background: var(--color-surface-secondary);
+      }
+
+      @media (width >= 64rem) {
+        &:nth-child(odd) {
+          background: none;
+        }
+
+        &:nth-child(odd):after {
+          content: "";
+          position: absolute;
+          z-index: -2;
+          inset: 0;
+          background: var(--color-surface-secondary);
+          border-radius: 0.75rem;
+        }
+      }
+    }
+  }
+</style>

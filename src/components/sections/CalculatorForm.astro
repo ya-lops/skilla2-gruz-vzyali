@@ -1,0 +1,151 @@
+---
+import type { BrandData } from "@/types/brand";
+
+import CalcInput from "@/components/ui/CalcInput.astro";
+import CtaPrice from "../blocks/CtaPrice.astro";
+import CalculatorFormResultYoursFields from "../blocks/CalculatorFormResultYoursFields.astro";
+
+interface Props {
+  brandData: BrandData;
+}
+
+const { brandData } = Astro.props;
+
+import { getGlobalMinPriceWithDiscount, getDiscountPercent } from "@/utils/price";
+import CalculatorFormResultOurs from "../blocks/CalculatorFormResultOurs.astro";
+
+const discount = getDiscountPercent(brandData.main.adv_price_percent);
+const { price, discountedPrice, showDiscount } = getGlobalMinPriceWithDiscount(brandData.services, discount);
+---
+
+<section id="calc" class="py-8 md:py-10 lg:py-20 overflow-clip scroll-mt-25" data-cmp="CalculatorForm">
+  <div class="container">
+    <h2 class="max-w-180 mb-15 typo-h3-x2 uppercase">Калькулятор стоимости вашего персонала</h2>
+
+    <div x-data="employeeCostCalculator()">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <CalcInput id="calc-net-salary" label="Зарплата на руки" model="netSalary" unit="₽" min="10000" max="300000" step="10000" />
+
+        <CalcInput id="calc-work-hours" label="Рабочих часов в месяц" model="workHoursMonth" unit="ч./мес" min="0" max="300" />
+
+        <CalcInput id="calc-vacation" label="Отпускных дней в год" model="vacationDays" unit="д./год" min="0" max="40" />
+
+        <CalcInput id="calc-sick" label="Больничных дней в год" model="sickDays" unit="д./год" min="0" max="24" />
+
+        <CalcInput
+          id="calc-overhead"
+          label="Реклама, подбор, бухгалтерия и т.д."
+          model="overheadPercent"
+          unit="%"
+          step="1.5"
+          min="0"
+          max="42"
+        />
+
+        <CalcInput
+          id="calc-medbooks"
+          label="Медкнижки, СИЗ, обучение и т.д."
+          model="medBooksYear"
+          unit="₽/год"
+          step="1"
+          min="0"
+          max="100"
+        />
+      </div>
+
+      <div class="mt-14">
+        <div class="grid grid-cols-1 lg:grid-cols-[1.125fr_2fr] gap-10 items-stretch">
+          <div class="py-6 lg:py-10">
+            <p class="typo-t4">Стоимость ваших сотрудников</p>
+            <p class="mt-6 font-heading">
+              <span class="typo-h3-x2" x-text="fmt(totalPerHour, 2)"></span>
+              <span>₽</span>/час
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-10 pt-10 border-t border-t-outline *:flex *:flex-col *:gap-2">
+              <CalculatorFormResultYoursFields />
+            </div>
+          </div>
+
+          <div class="h-full">
+            <CalculatorFormResultOurs {brandData} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  function employeeCostCalculator() {
+    return {
+      netSalary: 30000,
+      workHoursMonth: 165,
+      vacationDays: 15,
+      sickDays: 10,
+      overheadPercent: 6.5,
+      medBooksYear: 23.21,
+
+      fmt(value, digits = 0) {
+        const n = Number(value);
+        if (!isFinite(n)) return "0";
+        return n.toLocaleString("ru-RU", {
+          minimumFractionDigits: digits,
+          maximumFractionDigits: digits,
+        });
+      },
+
+      get annualHours() {
+        const raw = this.workHoursMonth * 12 - (this.vacationDays + this.sickDays) * 8;
+        return raw > 0 ? raw : 0;
+      },
+
+      get netSalaryPerHour() {
+        const netAnnual = this.netSalary * 12;
+        return this.annualHours ? netAnnual / this.annualHours : 0;
+      },
+
+      get grossAnnual() {
+        const grossMonthly = this.netSalary / 0.87;
+        return grossMonthly * 12;
+      },
+
+      get grossPerHour() {
+        return this.annualHours ? this.grossAnnual / this.annualHours : 0;
+      },
+
+      get insuranceAnnual() {
+        return this.grossAnnual * 0.3;
+      },
+
+      get insurancePerHour() {
+        return this.annualHours ? this.insuranceAnnual / this.annualHours : 0;
+      },
+
+      get grossWithInsurancePerHour() {
+        return this.grossPerHour + this.insurancePerHour;
+      },
+
+      get overheadAnnual() {
+        const base = this.grossAnnual + this.insuranceAnnual;
+        return base * (this.overheadPercent / 100);
+      },
+
+      get totalCostAnnualBeforeVat() {
+        return this.grossAnnual + this.insuranceAnnual + this.overheadAnnual + this.medBooksYear;
+      },
+
+      get totalCostAnnual() {
+        return this.totalCostAnnualBeforeVat * 1.2;
+      },
+
+      get totalPerHour() {
+        return this.annualHours ? this.totalCostAnnual / this.annualHours : 0;
+      },
+
+      get ndflPerHour() {
+        return this.grossPerHour - this.netSalaryPerHour;
+      },
+    };
+  }
+</script>

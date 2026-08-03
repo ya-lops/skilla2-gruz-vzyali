@@ -1,0 +1,44 @@
+---
+import Button from "@/components/ui/Button.astro";
+
+import HeroFeatures from "../blocks/HeroFeatures.astro";
+
+interface Props {
+  brandData: any;
+}
+
+const { brandData } = Astro.props;
+
+const firstServiceUrl = brandData.services[0].url.toLowerCase();
+---
+
+<section class="relative z-2 hero grid grid-cols-[100%] min-h-[630px] my-4" data-cmp="HeroMain">
+  <div class="container h-full isolate">
+    <div class="grid grid-cols-1 grid-rows-[1fr_0_1fr] lg:grid-rows-1 lg:grid-cols-[1fr_0_0.45fr] gap-3 h-full isolate">
+      <div class="flex flex-col gap-6 p-4 max-lg:pb-40 lg:p-10 bg-hero-main-surface text-hero-main-text rounded-[20px] lg:rounded-[40px]">
+        <h1 class="max-w-[50rem] typo-h1-x2 uppercase leading-[80%]">Разнорабочие для любых задач</h1>
+
+        <p class="max-w-100 my-auto">
+          Упакуем, аккуратно перевезём и расставим мебель в новом помещении. Работаем быстро и без срывов сроков
+        </p>
+
+        <div class="mt-auto">
+          <Button href="#kp" variant="accent" text="Получить КП" />
+        </div>
+      </div>
+
+      <div class="z-1 flex items-center justify-center">
+        <img
+          src="/images/hero-main.webp"
+          alt=""
+          fetchpriority="high"
+          class="lg:max-w-max lg:translate-x-[-15%] lg:translate-y-[100px] max-lg:max-h-[360px]"
+        />
+      </div>
+
+      <div class="p-4 lg:p-10 max-lg:pt-40 rounded-[20px] lg:rounded-[40px] add-gradient">
+        <HeroFeatures {brandData} />
+      </div>
+    </div>
+  </div>
+</section>

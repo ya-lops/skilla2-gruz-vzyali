@@ -1,0 +1,172 @@
+---
+// src/components/PhoneReplacement.astro
+interface ReplacementPhone {
+  [source: string]: string;
+}
+
+interface Props {
+  phone: string;
+  replacementPhones?: ReplacementPhone[];
+  class?: string;
+}
+
+const { phone, replacementPhones = [], class: className = "" } = Astro.props;
+
+// Убирает из номера всё кроме цифр: "+7 (999) 123-45-67" → "79991234567"
+function normalizeDigits(value: string) {
+  return (value || "").replace(/\D/g, "");
+}
+
+// Приводит номер к красивому виду: "79991234567" → "+7 (999) 123-45-67"
+function formatPhone(digits: string) {
+  const d = normalizeDigits(digits);
+  if (d.length === 11 && (d[0] === "7" || d[0] === "8")) {
+    const n = "7" + d.slice(1);
+    return `+7 (${n.slice(1, 4)}) ${n.slice(4, 7)}-${n.slice(7, 9)}-${n.slice(9, 11)}`;
+  }
+  return d ? `+${d}` : "";
+}
+
+// Определяет источник трафика по referrer
+function detectSourceFromReferrer(referrer: string | null): string | null {
+  if (!referrer) return null;
+  const ref = referrer.toLowerCase();
+  if (ref.includes("google.")) return "google";
+  if (ref.includes("yandex.") || ref.includes("ya.ru")) return "yandex";
+  if (ref.includes("2gis.")) return "2gis";
+  return null;
+}
+
+// Ищет нужный номер в пуле по источнику
+function pickPhoneFromPool(pool: ReplacementPhone[], source: string, fallback: string): string {
+  if (!pool?.length) return fallback;
+
+  const entry = pool.find((item) => {
+    const key = Object.keys(item)[0]?.toLowerCase();
+    return key === source;
+  });
+
+  if (!entry) return fallback;
+
+  const values = Object.values(entry);
+  return typeof values[0] === "string" ? values[0] : fallback;
+}
+
+// Определяем источник на сервере
+const utmSource = Astro.url.searchParams.get("utm_source")?.toLowerCase();
+const referrer = Astro.request.headers.get("referer");
+
+let source = "direct";
+if (utmSource) {
+  source = utmSource;
+} else if (referrer) {
+  const refSource = detectSourceFromReferrer(referrer);
+  if (refSource) source = refSource;
+}
+
+// Находим нужный номер
+const resolvedPhone = pickPhoneFromPool(replacementPhones, source, phone);
+---
+
+<a href={`tel:+${normalizeDigits(resolvedPhone)}`} class={`${className} invisible`} x-data="phoneReplacement" x-init="init">
+  {formatPhone(resolvedPhone)}
+</a>
+
+<script is:inline>
+  if (!window.__phoneReplacementInit) {
+    window.__phoneReplacementInit = true;
+
+    document.addEventListener("alpine:init", () => {
+      Alpine.data("phoneReplacement", () => ({
+        currentPhone: "",
+        currentSource: "",
+        defaultPhone: "",
+
+        init() {
+          const el = this.$el;
+
+          this.defaultPhone = el.dataset.default;
+          this.currentSource = el.dataset.source;
+
+          // Проверяем localStorage
+          const saved = this.getSavedData();
+
+          if (saved) {
+            this.currentPhone = saved.phone;
+            this.currentSource = saved.source;
+          } else {
+            // Берём номер из текста элемента (то что отрендерил сервер)
+            this.currentPhone = el.textContent.replace(/\D/g, "");
+            // Сохраняем в localStorage
+            this.saveData(this.currentPhone, this.currentSource);
+          }
+
+          // Обновляем DOM
+          const formattedPhone = this.formatPhone(this.currentPhone);
+          const telHref = `tel:+${this.currentPhone.replace(/\D/g, "")}`;
+
+          el.textContent = formattedPhone;
+          el.href = telHref;
+
+          // Показываем элемент
+          el.classList.remove("invisible");
+        },
+
+        getSavedData() {
+          try {
+            const data = localStorage.getItem("ct_phone");
+            if (!data) return null;
+
+            const parsed = JSON.parse(data);
+            const now = Date.now();
+            const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+
+            if (parsed.phone && parsed.timestamp && now - parsed.timestamp < thirtyDays) {
+              return parsed;
+            }
+
+            localStorage.removeItem("ct_phone");
+            return null;
+          } catch (e) {
+            return null;
+          }
+        },
+
+        saveData(phone, source) {
+          try {
+            localStorage.setItem(
+              "ct_phone",
+              JSON.stringify({
+                phone: phone,
+                source: source,
+                timestamp: Date.now(),
+              }),
+            );
+          } catch (e) {
+            // localStorage недоступен
+          }
+        },
+
+        formatPhone(phone) {
+          if (!phone) return "";
+          const cleaned = phone.replace(/\D/g, "");
+          if (cleaned.length === 11 && (cleaned[0] === "7" || cleaned[0] === "8")) {
+            const n = "7" + cleaned.slice(1);
+            return `+7 (${n.slice(1, 4)}) ${n.slice(4, 7)}-${n.slice(7, 9)}-${n.slice(9, 11)}`;
+          }
+          return cleaned ? `+${cleaned}` : "";
+        },
+
+        reset() {
+          localStorage.removeItem("ct_phone");
+          this.currentPhone = this.defaultPhone;
+          this.currentSource = "direct";
+
+          const el = this.$el;
+          el.textContent = this.formatPhone(this.defaultPhone);
+          el.href = `tel:+${this.defaultPhone.replace(/\D/g, "")}`;
+        },
+      }));
+    });
+  }
+</script>

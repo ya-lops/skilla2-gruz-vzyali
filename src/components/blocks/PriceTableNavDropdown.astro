@@ -1,0 +1,91 @@
+---
+import type { BrandData } from "@/types/brand";
+import IconSvg from "../IconSvg.astro";
+
+interface Props {
+  brandData: BrandData;
+  services: BrandData["services"];
+}
+
+const { services, brandData } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const normalizedPath = currentPath.replace(/\/+$/, "");
+
+const activeService = services.find((s) => normalizedPath === `/${s.url.toLowerCase()}`);
+const selectedLabel = activeService?.name || services[0]?.name || "";
+---
+
+<div x-data="{ open: false, selected: '' }" x-init={`selected = '${selectedLabel}'`} class="relative font-base">
+  <!-- Кнопка -->
+  <button
+    type="button"
+    x-on:click="open = !open"
+    class="w-full flex items-center justify-between p-3 border border-outline rounded-xl typo-button bg-surface-primary hover:bg-surface-secondary transition-colors cursor-pointer"
+  >
+    <span x-text="selected"></span>
+    <IconSvg name="chevron-down" :class="open ? 'rotate-180' : ''" />
+  </button>
+
+  <!-- Подложка (только мобилка) -->
+  <div
+    x-show="open"
+    x-cloak
+    x-on:click="open = false"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-10 bg-surface-blur lg:hidden"
+  >
+  </div>
+
+  <div
+    x-show="open"
+    x-cloak
+    x-on:click.outside="open = false"
+    class="absolute top-full left-0 right-0 z-20 min-h-15 mt-2 p-3 bg-surface-primary border border-outline rounded-xl shadow-lg cursor-pointer
+           lg:block
+           max-lg:fixed max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-auto max-lg:mt-0 max-lg:max-h-[70vh] max-lg:rounded-t-2xl max-lg:rounded-b-none overflow-auto overscroll-contain"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 max-lg:translate-y-full lg:-translate-y-2"
+    x-transition:enter-end="opacity-100 max-lg:translate-y-0 lg:translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 max-lg:translate-y-0 lg:translate-y-0"
+    x-transition:leave-end="opacity-0 max-lg:translate-y-full lg:-translate-y-2"
+  >
+    <div class="flex flex-col gap-1">
+      {
+        services.map((service) => {
+          const serviceUrl = `/${service.url.toLowerCase()}`;
+          const isActive = normalizedPath === serviceUrl;
+
+          return (
+            <a
+              href={serviceUrl}
+              x-on:click="open = false; selected = $el.textContent.trim()"
+              class:list={[
+                "block p-4 rounded-sm hover:bg-surface-secondary typo-t3 transition-colors select-none",
+                isActive ? "bg-surface-secondary" : "bg-transparent",
+              ]}
+            >
+              {service.name}
+            </a>
+          );
+        })
+      }
+    </div>
+
+    <div class="sticky bottom-0">
+      <button
+        type="button"
+        x-on:click="open = false"
+        class="hidden max-lg:block w-full mt-4 p-4 rounded-xl typo-button bg-surface-secondary hover:bg-surface-secondary-hover transition-colors"
+      >
+        Закрыть
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+---
+import type { BrandData } from "@/types/brand";
+import Button from "../ui/Button.astro";
+
+interface Props {
+  brandData: BrandData;
+}
+
+const { brandData } = Astro.props;
+
+const firstServiceUrl = brandData.services[0].url.toLowerCase();
+
+const { action_sel, site_actions } = brandData.main;
+
+// Приводим дату к норм виду
+function formatRuDate(date: Date = new Date()): string {
+  return new Intl.DateTimeFormat("ru-RU", {
+    day: "numeric",
+    month: "long",
+  }).format(date);
+}
+
+// Замена {DATE} на текущую дату
+function replaceDatePlaceholder(text: string): string {
+  return text.includes("{DATE}") ? text.replaceAll("{DATE}", formatRuDate()) : text;
+}
+
+// Классы для подсветки скидки
+const discountHighlightClasses = "py-1 px-1.5 md:py-1.5 md:px-2.5 text-text-primary-inverse bg-[#192532] rounded-xl";
+
+// Оборачиваем скидку и применяем классы выше
+function wrapDiscountInSpan(text: string): string {
+  return text.replace(/(\d+(?:[.,]\d+)?\s*%)/g, `<span class="${discountHighlightClasses}">$1</span>`);
+}
+
+let chosenAction: (typeof site_actions)[number] | undefined;
+
+// Включено чередование акций
+if (action_sel === 1) {
+  chosenAction = site_actions?.[Math.floor(Math.random() * (site_actions?.length ?? 0))];
+} else {
+  chosenAction = site_actions?.find((a) => a.is_active === 1);
+}
+
+const description = chosenAction ? replaceDatePlaceholder(chosenAction.description) : null;
+---
+
+{
+  description && (
+    <section class="promo bg-promo-surface overflow-clip" data-cmp="Promo">
+      <div class="container flex items-center justify-between gap-7 max-w-200 lg:mx-auto py-2 md:py-3">
+        <p class="text-promo-text-primary typo-t3 lg:typo-t2 font-medium" set:html={wrapDiscountInSpan(description)} />
+        <Button href={`/${firstServiceUrl}`} variant="accent" inverse class="!h-[38px]">
+          <span class="hidden lg:block">В каталог</span>
+        </Button>
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,135 @@
+---
+import Button from "@/components/ui/Button.astro";
+import FormInput from "@/components/ui/FormInput.astro";
+import FormCheckbox from "@/components/ui/FormCheckbox.astro";
+
+import type { BrandData } from "@/types/brand";
+import PhoneReplacement from "./PhoneReplacement.astro";
+
+interface Props {
+  brandData: BrandData;
+}
+
+const { brandData } = Astro.props;
+---
+
+<div
+  x-data="contactModal()"
+  x-show="open"
+  x-cloak
+  class="fixed inset-0 z-50 flex items-center justify-center p-4"
+  x-init="
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#contact') {
+        openModal();
+        history.replaceState(null, '', window.location.pathname);
+      }
+    });
+    if (window.location.hash === '#contact') {
+      openModal();
+      history.replaceState(null, '', window.location.pathname);
+    }
+  "
+  @keydown.escape.window="close()"
+  data-cmp="ContactModalForm"
+>
+  <div
+    x-show="open"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="absolute inset-0 bg-surface-blur/75 backdrop-blur-xs"
+    @click="close()"
+  >
+  </div>
+
+  <article
+    x-show="open"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 scale-95"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-95"
+    class="relative z-5 w-full max-w-[1050px]"
+    @click.outside="close()"
+  >
+    <button
+      type="button"
+      class="absolute top-4 right-4 typo-t4 text-text-tertiary hover:text-text-primary transition-colors cursor-pointer"
+      @click="close()"
+      aria-label="Закрыть"
+    >
+      ✕
+    </button>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-2">
+      <section class="p-6 lg:p-8 bg-surface-primary-inverse rounded-2xl">
+        <h3 class="mb-8 typo-h3 text-left text-text-primary-inverse">Позвоните нам по номеру</h3>
+        <div class="flex flex-col gap-4">
+          <PhoneReplacement
+            phone={brandData.main.site_phone}
+            replacementPhones={brandData.main.site_replacement_phones}
+            class="typo-t1 text-text-primary-inverse hover:underline!"
+          />
+          {
+            brandData.main.site_phone2 && (
+              <a class="typo-t1 text-text-primary-inverse hover:underline!" href={`tel:${brandData.main.site_phone2}`}>
+                {brandData.main.site_phone2}
+              </a>
+            )
+          }
+        </div>
+        {
+          brandData.main.site_work_time && (
+            <p class="mt-4 typo-t3 text-text-tertiary-inverse">Прием заказов: {brandData.main.site_work_time}</p>
+          )
+        }
+      </section>
+
+      <section class="p-6 lg:p-8 bg-surface-secondary rounded-2xl">
+        <h3 class="mb-8 typo-h3 text-left text-text-primary">Или оставьте заявку на обратный звонок</h3>
+        <form class="flex flex-col gap-3" @submit.prevent="submitForm()" novalidate>
+          <FormInput
+            id="modal-name"
+            label="Имя"
+            model="form.name"
+            errorModel="errors.name"
+            class="rounded-sm bg-surface-secondary typo-t4"
+            required
+          />
+
+          <FormInput
+            id="modal-phone"
+            type="tel"
+            label="Телефон"
+            placeholder="Телефон"
+            model="form.phone"
+            errorModel="errors.phone"
+            class="rounded-sm bg-surface-secondary typo-t4"
+            required
+          />
+
+          <FormCheckbox id="modal-agree" model="form.agree" errorModel="errors.agree">
+            Соглашаюсь с <a href="/policy" class="underline">политикой обработки персональных данных</a>
+          </FormCheckbox>
+
+          <div class="mt-2">
+            <Button
+              tag="button"
+              type="submit"
+              variant="accent"
+              :disabled="submitting || !form.agree"
+              :class="{ 'grayscale opacity-50 cursor-not-allowed!': !form.agree }"
+            >
+              <span x-text="submitting ? 'Отправка...' : 'Оставить заявку'"></span>
+            </Button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </article>
+</div>

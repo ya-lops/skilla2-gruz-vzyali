@@ -1,0 +1,113 @@
+---
+import type { BrandData } from "@/types/brand";
+
+import BlockMessengersLinks from "@/components/blocks/BlockMessengersLinks.astro";
+import Button from "@/components/ui/Button.astro";
+import Map from "./Map.astro";
+import PhoneReplacement from "../blocks/PhoneReplacement.astro";
+
+interface Props {
+  brandData: BrandData;
+}
+
+const { brandData } = Astro.props;
+
+const reqs = [
+  {
+    label: "ИНН",
+    value: brandData.default.inn,
+  },
+  {
+    label: "КПП",
+    value: brandData.default.kpp,
+  },
+  {
+    label: "ОГРН",
+    value: brandData.default.ogrn,
+  },
+  {
+    label: "Юр. адрес",
+    value: brandData.default.ur_address,
+  },
+  {
+    label: "БИК",
+    value: brandData.default.bik,
+  },
+  {
+    label: "К/с",
+    value: brandData.default.ks,
+  },
+  {
+    label: "Банк",
+    value: brandData.default.bank,
+  },
+  {
+    label: "Р/с",
+    value: brandData.default.rs,
+  },
+];
+---
+
+<section class="contacts py-8 md:py-10 lg:py-20" data-cmp="Contacts">
+  <div class="container">
+    <div class="_contacts-inner grid grid-cols-1 lg:grid-cols-[2fr_1fr] items-start gap-20">
+      <div class="_contacts-info">
+        <h1 class="_contacts-title typo-h1 mb-15 text-left">Получите бесплатную консультацию</h1>
+
+        <section class="flex flex-col items-start">
+          <div class="_contacts-phones flex flex-col gap-4">
+            {
+              brandData.main.site_phone && (
+                <PhoneReplacement
+                  phone={brandData.main.site_phone}
+                  replacementPhones={brandData.main.site_replacement_phones}
+                  class="typo-t1 text-text-primary hover:underline!"
+                />
+              )
+            }
+
+            {
+              brandData.main.site_phone2 && (
+                <a class="typo-t1 text-text-primary hover:underline!" href={`tel:${brandData.main.site_phone2}`}>
+                  {brandData.main.site_phone2}
+                </a>
+              )
+            }
+
+            <a class="typo-t3 text-text-secondary hover:underline!" href={`mailto:${brandData.main.site_email}`}
+              >{brandData.main.site_email}</a
+            >
+          </div>
+
+          <BlockMessengersLinks {brandData} />
+
+          <div class="_contacts-hours mt-8 text-text-tertiary">
+            Прием заказов: {brandData.main.site_work_time}
+          </div>
+        </section>
+
+        <section class="mt-15">
+          <p class="_map-address mb-4">{brandData.main.site_address}</p>
+
+          <Map {brandData} simple />
+        </section>
+      </div>
+
+      <div class="_contacts-reqs flex flex-col items-start gap-6 p-4 lg:p-10 border border-outline rounded-2xl">
+        <p class="mb-2 typo-h4">{brandData.default.name}</p>
+        {
+          reqs
+            ?.filter((item: any) => item.value)
+            .map((item: any) => (
+              <div class="_reqs-item">
+                <div class="_label typo-t4 text-text-secondary">{item.label}</div>
+                <div class="_value mt-2 typo-t3">{item.value}</div>
+              </div>
+            ))
+        }
+
+        <Button href="https://api2.skilla.ru/api/site/details" text="Скачать реквизиты" />
+      </div>
+    </div>
+  </div>
+</section>

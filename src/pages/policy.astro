@@ -1,0 +1,58 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/ui/Breadcrumbs.astro";
+import { getBrandData } from "@/lib/api";
+
+const brandData = await getBrandData();
+---
+
+<BaseLayout brandData={brandData}>
+  <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Политика конфиденциальности" }]} />
+
+  <div class="container">
+    <h1 class="_policy-title typo-h1 mb-15 text-left">Политика конфиденциальности</h1>
+
+    <div class="_policy-content max-w-3xl mx-auto">
+      <h2 class="typo-h4 mb-4">1. Общие положения</h2>
+      <p class="typo-t2 mb-8">
+        Настоящая политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта.
+      </p>
+
+      <h2 class="typo-h4 mb-4">2. Какие данные мы собираем</h2>
+      <p class="typo-t2 mb-8">
+        Мы собираем только те данные, которые вы добровольно предоставляете через формы обратной связи: имя, телефон, email.
+      </p>
+
+      <h2 class="typo-h4 mb-4">3. Цели обработки данных</h2>
+      <p class="typo-t2 mb-8">
+        Ваши данные используются исключительно для обратной связи, обработки заявок и улучшения качества обслуживания.
+      </p>
+
+      <h2 class="typo-h4 mb-4">4. Передача третьим лицам</h2>
+      <p class="typo-t2 mb-8">
+        Мы не передаем ваши персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством РФ.
+      </p>
+
+      <h2 class="typo-h4 mb-4">5. Защита данных</h2>
+      <p class="typo-t2 mb-8">
+        Мы принимаем необходимые меры для защиты ваших данных от несанкционированного доступа, изменения или уничтожения.
+      </p>
+
+      <h2 class="typo-h4 mb-4">6. Файлы cookie</h2>
+      <p class="typo-t2 mb-8">
+        Сайт использует файлы cookie для аналитики и улучшения работы. Продолжая использовать сайт, вы соглашаетесь с этим.
+      </p>
+
+      <h2 class="typo-h4 mb-4">7. Ваши права</h2>
+      <p class="typo-t2 mb-8">Вы можете в любой момент запросить удаление ваших данных, отправив письмо на нашу почту.</p>
+
+      <h2 class="typo-h4 mb-4">8. Контакты</h2>
+      <p class="typo-t2 mb-8">
+        По вопросам, связанным с политикой конфиденциальности, обращайтесь: <a
+          class="hover:underline"
+          href={`mailto:${brandData.main.site_email}`}>{brandData.main.site_email}</a
+        >.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

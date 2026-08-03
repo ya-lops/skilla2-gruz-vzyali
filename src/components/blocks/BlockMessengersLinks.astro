@@ -1,0 +1,48 @@
+---
+import type { BrandData } from "@/types/brand";
+
+import IconSvg from "../IconSvg.astro";
+
+interface Props {
+  brandData: BrandData;
+  class?: string;
+  showLabel: boolean;
+}
+
+const { brandData, class: className, showLabel = true } = Astro.props;
+
+const messengers = brandData.main?.site_messenger_links;
+---
+
+{
+  messengers.length > 0 && (
+    <div class:list={["flex items-center gap-2.75 [&_a]:hover:text-accent", className]} data-cmp="BlockMessengersLinks">
+      {showLabel && <p>Написать нам:</p>}
+
+      {messengers?.map((link) => (
+        <>
+          {link.telegram && (
+            <a href={link.telegram} target="_blank" rel="noopener noreferrer">
+              <IconSvg name="telegram" />
+            </a>
+          )}
+          {link.whatsapp && (
+            <a href={link.whatsapp} target="_blank" rel="noopener noreferrer">
+              <IconSvg name="whatsapp" />
+            </a>
+          )}
+          {link.max && (
+            <a href={link.max} target="_blank" rel="noopener noreferrer">
+              <IconSvg name="max" />
+            </a>
+          )}
+          {link.vk && (
+            <a href={link.vk} target="_blank" rel="noopener noreferrer">
+              <IconSvg name="vk" />
+            </a>
+          )}
+        </>
+      ))}
+    </div>
+  )
+}

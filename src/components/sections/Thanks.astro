@@ -1,0 +1,43 @@
+---
+import type { BrandData } from "@/types/brand";
+import { STORAGE_PATH } from "@/lib/consts";
+
+interface Props {
+  brandData: BrandData;
+}
+
+const { brandData } = Astro.props;
+
+const images = (brandData.partners?.thank_letters || []).map((item: string) => ({
+  src: `${STORAGE_PATH}${item}`,
+  thumb: `${STORAGE_PATH}${item}`,
+}));
+---
+
+<section class="py-8 md:py-10 lg:py-20" data-cmp="Thanks">
+  <div class="container">
+    <h2 class="typo-h2-x2 mb-8 md:12 lg:mb-16 uppercase">Благодарности</h2>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      {
+        images.map((image) => (
+          <div class="flex flex-col gap-6 hover:scale-110 transition-transform">
+            <a href={image.src} data-fancybox="thanks-gallery">
+              <img class="rounded-xl cursor-pointer" src={image.thumb} alt="Изображение благодарности" loading="lazy" />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof Fancybox !== "undefined") {
+      Fancybox.bind('[data-fancybox="thanks-gallery"]', {
+        groupAll: true,
+        Toolbar: false,
+      });
+    }
+  });
+</script>

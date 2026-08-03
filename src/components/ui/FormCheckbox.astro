@@ -1,0 +1,22 @@
+---
+export interface Props {
+  id: string;
+  model?: string;
+  errorModel?: string;
+  class?: string;
+}
+
+const { id, model = "", errorModel = "", class: className = "", ...rest } = Astro.props;
+---
+
+<div class={`flex items-center gap-3 ${className}`}>
+  <input
+    id={id}
+    type="checkbox"
+    x-model={model}
+    :class={`${errorModel} ? 'ring-2 ring-red-600' : ''`}
+    class="size-4 rounded border-outline cursor-pointer"
+    {...rest}
+  />
+  <label for={id} class="typo-t4 text-text-secondary cursor-pointer select-none"><slot /></label>
+</div>

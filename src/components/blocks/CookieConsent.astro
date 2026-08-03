@@ -1,0 +1,32 @@
+---
+import Button from "@/components/ui/Button.astro";
+---
+
+<div
+  x-data="cookieConsent()"
+  x-show="visible"
+  x-cloak
+  x-transition:enter="transition ease-out duration-250"
+  x-transition:enter-start="opacity-0 translate-y-full"
+  x-transition:enter-end="opacity-100 translate-y-0"
+  x-transition:leave="transition ease-in duration-100"
+  x-transition:leave-start="opacity-100 translate-y-0"
+  x-transition:leave-end="opacity-0 translate-y-full"
+  class="fixed bottom-0 left-0 right-0 z-5 pb-8 bg-transparent"
+  data-cmp="CookieConsent"
+>
+  <div class="container">
+    <div class="flex flex-col md:flex-row gap-10 py-4 px-8 bg-surface-blur backdrop-blur-md rounded-2xl">
+      <p class="typo-t4 text-text-primary-inverse">
+        Мы используем файлы cookie, а также сервисы аналитики, такие как Яндекс.Метрика, для работы сайта, анализа трафика и персонализации
+        контента. Продолжая использовать сайт, вы соглашаетесь с обработкой ваших персональных данных в соответствии с нашей 
+        <a href="/policy" class="underline">Политикой в отношении обработки персональных данных</a>.
+        Если вы не согласны, пожалуйста, прекратите использование Сайта.
+      </p>
+      <div class="flex gap-4 shrink-0">
+        <Button tag="button" @click="decline()" variant="secondary" inverse text="Отказаться"/>
+        <Button tag="button" @click="accept()" variant="secondary" inverse text="Согласен"/>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Advantages from "@/components/sections/Advantages.astro";
+import Testimonials from "@/components/sections/Testimonials.astro";
+import HowWeWork from "@/components/sections/HowWeWork.astro";
+import Partners from "@/components/sections/Partners.astro";
+import Thanks from "@/components/sections/Thanks.astro";
+import Map from "@/components/sections/Map.astro";
+import Blog from "@/components/sections/Blog.astro";
+import KP from "@/components/sections/KP.astro";
+import Breadcrumbs from "@/components/ui/Breadcrumbs.astro";
+
+import { getBrandData } from "@/lib/api";
+import HeroAbout from "@/components/sections/HeroAbout.astro";
+
+const brandData = await getBrandData();
+---
+
+<BaseLayout {brandData}>
+  <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "О компании" }]} />
+  <HeroAbout {brandData} />
+  <Advantages {brandData} />
+  <Testimonials {brandData} />
+  <HowWeWork type="cards" {brandData} />
+  <Partners {brandData} full />
+  <Thanks {brandData} />
+  <Map {brandData} />
+  <Blog {brandData} />
+  <KP {brandData} />
+</BaseLayout>

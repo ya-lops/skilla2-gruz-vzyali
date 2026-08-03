@@ -1,0 +1,24 @@
+---
+interface Props {
+  post: any;
+  brandData: any;
+}
+
+const { post, brandData } = Astro.props;
+---
+
+<article class="blog-post" data-cmp="BlogPost">
+  <div class="blog-post__container">
+    <div class="blog-post__header">
+      <h1 class="blog-post__title">{post.title}</h1>
+      <div class="blog-post__meta">
+        <span class="blog-post__date">{post.date}</span>
+        {post.author && <span class="blog-post__author">Автор: {post.author}</span>}
+      </div>
+    </div>
+    {post.image && <img src={post.image} alt={post.title} class="blog-post__featured-image" />}
+    <div class="blog-post__content">
+      <slot />
+    </div>
+  </div>
+</article>

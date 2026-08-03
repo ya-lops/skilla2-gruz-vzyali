@@ -1,0 +1,48 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PriceTable from "@/components/sections/PriceTable.astro";
+import CalculatorForm from "@/components/sections/CalculatorForm.astro";
+import Blog from "@/components/sections/Blog.astro";
+import KP from "@/components/sections/KP.astro";
+import FAQ from "@/components/sections/FAQ.astro";
+import Breadcrumbs from "@/components/ui/Breadcrumbs.astro";
+
+import { getBrandData } from "@/lib/api";
+
+const { service } = Astro.params;
+
+const brandData = await getBrandData();
+
+const currentService = brandData.services.find(
+  (s) => s.is_active === 1 && s.url.toLowerCase() === service?.toLowerCase()
+);
+
+if (!currentService) {
+  return Astro.rewrite("/404");
+}
+
+const firstServiceUrl = brandData.services[0]?.url?.toLowerCase();
+
+const pageMeta = brandData.meta?.find((m) => m.url === currentService.url);
+---
+
+<BaseLayout
+  {brandData}
+  metaTitle={pageMeta?.title || currentService.name}
+  metaDescription={pageMeta?.description || currentService.description || ''}
+  metaKeywords={pageMeta?.keywords || ""}
+>
+  <Breadcrumbs
+    items={[
+      { label: "Главная", href: "/" },
+      { label: "Услуги и цены", href: `/${firstServiceUrl}` },
+      { label: currentService.name },
+    ]}
+  />
+
+  <PriceTable {brandData} />
+  <CalculatorForm {brandData} />
+  <Blog {brandData} />
+  <KP {brandData} />
+  <FAQ {brandData} />
+</BaseLayout>

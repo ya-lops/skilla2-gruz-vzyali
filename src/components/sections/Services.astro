@@ -1,0 +1,108 @@
+---
+import type { BrandData } from "@/types/brand";
+
+import { getDiscountedPrice, getDiscountPercent, hasDiscount } from "@/utils/price";
+
+import Button from "@/components/ui/Button.astro";
+import IconService from "@/components/IconService.astro";
+
+interface Props {
+  brandData: BrandData;
+  media: "icon" | "image";
+}
+
+const { brandData, media = "image" } = Astro.props;
+
+const firstServiceUrl = brandData.services[0].url.toLowerCase();
+
+// Функция для поиска подуслуги с минимальной ценой
+function getMinPriceService(subServices: Array<{ price: string; unit: string; name: string }>) {
+  return subServices.reduce((min, current) => (parseFloat(current.price) < parseFloat(min.price) ? current : min));
+}
+
+// Получаем скидку по акции
+const discount = getDiscountPercent(brandData.main.adv_price_percent);
+const showDiscount = hasDiscount(discount);
+
+const serviceIcons = ["office", "cargo", "helmet"];
+
+const hasOrder = brandData.services.some((s) => s.order !== undefined);
+
+const sortedServices = (
+  hasOrder
+    ? brandData.services.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0))
+    : brandData.services.map((service, index) => ({
+        ...service,
+        order: index < 3 ? index + 1 : null,
+      }))
+)
+  .filter((service) => service.is_active === 1)
+  .slice(0, 7);
+
+function isFeatured(service: (typeof sortedServices)[0]): boolean {
+  return (Number(service.order) || 0) > 0;
+}
+---
+
+<section class="py-8 md:py-10 lg:py-20 overflow-clip" data-cmp="Services">
+  <div class="container">
+    <h2 class="mb-8 md:12 lg:mb-16 typo-h3-x2 uppercase">Наши услуги</h2>
+
+    <div class="flex flex-col">
+      {
+        sortedServices.map((service, index) => {
+          const minService = getMinPriceService(service.services);
+          const discountedPrice = getDiscountedPrice(minService.price, discount);
+          const isFeatured = index < 3;
+
+          if (isFeatured) {
+            return (
+              <div class="grid grid-cols-1 md:grid-cols-[170px_1fr] lg:grid-cols-[330px_1fr] gap-6 lg:gap-6 mb-10 lg:mb-6">
+                <div class="max-md:order-last flex max-md:justify-center max-md:pl-20 aspect-square rounded-[20px] lg:rounded-[40px] add-gradient">
+                  <img
+                    src={`/images/service-${index + 1}.webp`}
+                    alt={`Изображение для услуги ${service.name}`}
+                    class="max-w-max"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-20 md:pl-25 lg:pl-45">
+                  <div>
+                    <h3 class="mb-6 typo-h4-x2">{service.name}</h3>
+                    <p class="typo-t3 text-text-secondary text-balance">
+                      {service.description ||
+                        "С ежедневной оплатой для стройки, склада, погрузки и уборки. Доступные срочно и без посредников"}
+                    </p>
+                  </div>
+
+                  <div class="shrink-0">
+                    <Button href={`/${service.url.toLowerCase()}`} variant="secondary" text={`от ${discountedPrice} ₽`} />
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-20 py-10 border-t border-t-outline">
+              <div class="flex-1">
+                <h3 class="mb-6 typo-h4-x2">{service.name}</h3>
+                <p class="typo-t3 text-text-secondary text-balance">
+                  {service.description || "С ежедневной оплатой для стройки, склада, погрузки и уборки. Доступные срочно и без посредников"}
+                </p>
+              </div>
+
+              <div class="shrink-0">
+                <Button href={`/${service.url.toLowerCase()}`} variant="secondary" text={`от ${discountedPrice} ₽`} />
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+    <div class="flex items-center justify-center gap-4 mt-16">
+      <Button href={firstServiceUrl} variant="secondary" text="Все услуги" arrow="right" />
+    </div>
+  </div>
+</section>

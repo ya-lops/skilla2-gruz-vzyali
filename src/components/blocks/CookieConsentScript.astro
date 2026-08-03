@@ -1,0 +1,128 @@
+---
+const res = await fetch(`https://api2.skilla.ru/api/site`);
+const { counters } = await res.json();
+
+const countersJson = JSON.stringify(counters).replace(/</g, "\\u003c");
+---
+
+<script type="application/json" id="counters-data" set:html={countersJson} />
+
+<script is:inline>
+  function hasContent(str) {
+    return typeof str === "string" && str.trim().length > 0;
+  }
+
+  function parseToExecutableFragment(html) {
+    const tpl = document.createElement("template");
+    tpl.innerHTML = html;
+
+    tpl.content.querySelectorAll("script").forEach((old) => {
+      const s = document.createElement("script");
+      for (const { name, value } of old.attributes) {
+        s.setAttribute(name, value);
+      }
+      s.textContent = old.textContent;
+      old.replaceWith(s);
+    });
+
+    return tpl.content;
+  }
+
+  function insertAfterNode(refNode, html) {
+    const fragment = parseToExecutableFragment(html);
+    const nodes = Array.from(fragment.childNodes);
+
+    let lastInserted = refNode;
+    nodes.forEach((node) => {
+      lastInserted.after(node);
+      lastInserted = node;
+    });
+
+    return lastInserted;
+  }
+
+  function appendToContainer(container, html) {
+    const fragment = parseToExecutableFragment(html);
+    container.appendChild(fragment);
+  }
+
+  function cookieConsent() {
+    return {
+      visible: false,
+      loaded: false,
+
+      init() {
+        const consent = this.getCookie("cookieConsent");
+
+        if (!consent) {
+          this.visible = true;
+        } else if (consent === "accepted") {
+          this.loadCounters();
+        }
+      },
+
+      loadCounters() {
+        if (this.loaded) return;
+        this.loaded = true;
+
+        const el = document.getElementById("counters-data");
+        if (!el) {
+          console.log("Данные счётчиков не найдены");
+          return;
+        }
+
+        const data = JSON.parse(el.textContent);
+        const titleEl = document.querySelector("title");
+        let anchor = titleEl;
+
+        // site_yandex и site_google — сразу после <title>, по порядку
+        if (titleEl) {
+          if (hasContent(data.site_yandex)) {
+            anchor = insertAfterNode(anchor, data.site_yandex);
+            console.log("Скрипты Яндекса загружены");
+          }
+          if (hasContent(data.site_google)) {
+            anchor = insertAfterNode(anchor, data.site_google);
+            console.log("Скрипты Google загружены");
+          }
+        }
+
+        // site_html_head — перед </head>
+        if (hasContent(data.site_html_head)) {
+          appendToContainer(document.head, data.site_html_head);
+          console.log("Скрипты site_html_head загружены");
+        }
+
+        // site_html — перед </html>
+        if (hasContent(data.site_html)) {
+          appendToContainer(document.documentElement, data.site_html);
+          console.log("Скрипты site_html загружены");
+        }
+      },
+
+      getCookie(name) {
+        const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+        return match ? decodeURIComponent(match[2]) : null;
+      },
+
+      setCookie(name, value, days = 7) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/;SameSite=Lax`;
+      },
+
+      accept() {
+        this.setCookie("cookieConsent", "accepted");
+        this.visible = false;
+        this.loadCounters();
+        window.onCookieConsent?.("accepted");
+      },
+
+      decline() {
+        this.setCookie("cookieConsent", "declined");
+        this.visible = false;
+        console.log("Пользователь отклонил куки — счётчики не загружены");
+      },
+    };
+  }
+</script>

@@ -1,0 +1,56 @@
+---
+import type { BrandData } from "@/types/brand";
+import Button from "@/components/ui/Button.astro";
+
+interface Props {
+  brandData: BrandData;
+  showLast?: boolean;
+}
+
+const { brandData, showLast = false } = Astro.props;
+
+const currentPath = Astro.url?.pathname || "";
+const isBlogPage = currentPath === "/blog";
+
+const articles = showLast ? brandData.articles?.slice(0, 3) : brandData.articles;
+---
+
+<section class="blog py-8 md:py-10 lg:py-20" data-cmp="Blog">
+  <div class="container">
+    <h2 class="mb-8 md:12 lg:mb-16 typo-h3-x2 uppercase">Наш блог</h2>
+
+    {
+      articles?.length > 0 ? (
+        <>
+          <div class="_blog-grid grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-4">
+            {articles.map((blogpost: any) => (
+              <article class="_blogpost flex flex-col items-start gap-4 text-left">
+                <a class="contents" href={`/blog/${blogpost.url}`}>
+                  {blogpost.imagePreview ? (
+                    <img src={blogpost.imagePreview} alt={`Превью-изображение для записи блога ${blogpost.title}`} loading="lazy" />
+                  ) : (
+                    <div class="w-full rounded-2xl bg-gray-200 aspect-video" />
+                  )}
+
+                  <h3 class="_blogpost-title px-4 typo-h4 text-left">{blogpost.title || "Запись блога"}</h3>
+                  <p class="_blogpost-description px-4 typo-t3">{blogpost.description || ""}</p>
+                  <div class="_blogpost-date px-4 typo-label">{blogpost.date_create || ""}</div>
+                </a>
+              </article>
+            ))}
+          </div>
+
+          {!isBlogPage && !showLast && (
+            <div class="_blog-actions flex items-center justify-center gap-4 mt-16">
+              <Button href="/blog" variant="secondary" arrow="right" text="Перейти в блог" />
+            </div>
+          )}
+        </>
+      ) : (
+        <div>
+          <p>Пока ничего нет</p>
+        </div>
+      )
+    }
+  </div>
+</section>

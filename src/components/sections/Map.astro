@@ -1,0 +1,67 @@
+---
+import type { BrandData } from "@/types/brand";
+
+interface Props {
+  brandData: BrandData;
+  simple?: boolean;
+}
+
+const { brandData, simple = false } = Astro.props;
+const mapData = brandData.map_coordinates;
+const citiesJson = JSON.stringify(mapData.cities);
+const cityCount = mapData.city_count;
+---
+
+{simple && <div id="map" class="_map-body h-80 lg:h-105 rounded-2xl overflow-clip" />}
+
+{
+  !simple && (
+    <section class="map pb-20" data-cmp="Map">
+      <div class="container">
+        <h2 class="_map-title mb-8 md:12 lg:mb-16">Работаем в более чем в {cityCount} городах России</h2>
+        <div class="_map-inner">
+          <div id="map" class="_map-body h-80 lg:h-105 rounded-2xl overflow-clip" />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script is:inline define:vars={{ citiesJson }}>
+  const script = document.createElement("script");
+  script.src = "https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU";
+  script.onload = () => {
+    ymaps.ready(() => {
+      const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim() || '#FF5722';
+      
+      const map = new ymaps.Map("map", {
+        center: [57.251096, 68.40977],
+        zoom: 3,
+        controls: ["zoomControl", "typeSelector"],
+      });
+
+      map.behaviors.disable("scrollZoom");
+
+      const cities = JSON.parse(citiesJson);
+      const encodedColor = encodeURIComponent(accentColor);
+
+      cities.forEach((city) => {
+        const placemark = new ymaps.Placemark(
+          [city.lat, city.lng],
+          {
+            hintContent: city.city,
+            balloonContent: `<strong>${city.city}</strong><br><a href="https://${city.seo_site}" target="_blank" rel="noopener noreferrer">${city.seo_site}</a>`,
+          },
+          {
+            iconLayout: "default#imageWithContent",
+            iconImageHref: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='7' fill='${encodedColor}' stroke='black' stroke-width='2'/%3E%3C/svg%3E`,
+            iconImageSize: [16, 16],
+            iconImageOffset: [-8, -8],
+          },
+        );
+        map.geoObjects.add(placemark);
+      });
+    });
+  };
+  document.head.appendChild(script);
+</script>

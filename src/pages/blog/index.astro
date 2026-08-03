@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import KP from '@/components/sections/KP.astro';
+import Blog from '@/components/sections/Blog.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+
+import { getBrandData } from '@/lib/api';
+
+const brandData = await getBrandData();
+---
+
+<BaseLayout {brandData}>
+  <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Блог" }]} />
+
+  <Blog {brandData} />
+  <KP {brandData} />
+</BaseLayout>

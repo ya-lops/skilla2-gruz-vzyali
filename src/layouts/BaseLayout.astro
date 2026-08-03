@@ -1,0 +1,84 @@
+---
+import "@/styles/global.css";
+
+import type { BrandData } from "@/types/brand";
+import { Font } from "astro:assets";
+
+import SiteHeader from "@/components/sections/SiteHeader.astro";
+import SiteFooter from "@/components/sections/SiteFooter.astro";
+
+import ContactModalForm from "@/components/blocks/ContactModalForm.astro";
+import ContactModalFormScript from "@/components/blocks/ContactModalFormScript.astro";
+import BlockToast from "@/components/blocks/BlockToast.astro";
+import BlockToastScript from "@/components/blocks/BlockToastScript.astro";
+import Promo from "@/components/sections/Promo.astro";
+import CookieConsent from "@/components/blocks/CookieConsent.astro";
+import CookieConsentScript from "@/components/blocks/CookieConsentScript.astro";
+
+interface Props {
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  brandData: BrandData;
+}
+
+import { getBrandData } from "@/lib/api";
+import { getMetaByUrl } from "@/utils/meta";
+
+const brandData = await getBrandData();
+
+const currentUrl = Astro.url.pathname;
+const pageMeta = getMetaByUrl(brandData.meta, currentUrl);
+const defaultMeta = brandData.meta.find((m) => m.url === "index");
+
+const { metaTitle, metaDescription, metaKeywords } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{metaTitle || pageMeta?.title || defaultMeta?.title || brandData.default.name}</title>
+    <meta name="description" content={metaDescription || pageMeta?.description || defaultMeta?.description || ""} />
+    <meta name="keywords" content={metaKeywords || pageMeta?.keywords || defaultMeta?.keywords || ""} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script defer src="/scripts/alpinejs.min.js"></script>
+    <script defer src="/scripts/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="/scripts/fancybox.css" />
+
+    <!-- Alumni Sans -->
+    <link rel="preload" href="/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-700.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Golos Text -->
+    <link rel="preload" href="/fonts/golos-text-v7-cyrillic_cyrillic-ext_latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/golos-text-v7-cyrillic_cyrillic-ext_latin-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/golos-text-v7-cyrillic_cyrillic-ext_latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  
+  <body class="bg-surface-primary">
+    <Promo {brandData} />
+
+    <SiteHeader {brandData} />
+
+    <main>
+      <slot />
+    </main>
+
+    <SiteFooter {brandData} />
+
+    <CookieConsent />
+    <BlockToast />
+    <ContactModalForm {brandData} />
+
+    <BlockToastScript />
+    <CookieConsentScript />
+    <ContactModalFormScript />
+  </body>
+</html>

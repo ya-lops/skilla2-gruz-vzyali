@@ -1,0 +1,70 @@
+---
+import type { BrandData, SubService } from "@/types/brand";
+import { getDiscountedPrice, hasDiscount } from "@/utils/price";
+
+interface Props {
+  currentService: BrandData["services"][number];
+  discountPercent: number;
+  showDiscountValue: boolean;
+}
+
+const { currentService, discountPercent, showDiscountValue = false } = Astro.props;
+
+const showDiscount = hasDiscount(discountPercent);
+---
+
+{
+  currentService?.services && currentService.services.length > 0 ? (
+    <div class="_subservices" itemscope itemtype="https://schema.org/OfferCatalog" itemprop="hasOfferCatalog">
+      <meta itemprop="name" content={currentService.name} />
+
+      {currentService.services
+        .filter((subService) => subService.name)
+        .map((subService, index) => {
+          const discountedPrice = getDiscountedPrice(subService.price, discountPercent);
+
+          return (
+            <div
+              class="flex flex-col md:flex-row gap-5 py-5 lg:py-10 not-last:border-b not-last:border-b-outline"
+              itemscope
+              itemtype="https://schema.org/Offer"
+              itemprop="itemListElement"
+            >
+              <meta itemprop="position" content={String(index + 1)} />
+              <meta itemprop="priceCurrency" content="RUB" />
+              <meta itemprop="price" content={showDiscount ? discountedPrice : subService.price} />
+
+              <h3 class="typo-h5-x2 lg:typo-h4-x2" itemprop="name">
+                {subService.name}
+              </h3>
+
+              <div class="flex items-center justify-between md:justify-end gap-10 md:ml-auto">
+                {showDiscount && (
+                  <div class="text-text-secondary line-through typo-t2" aria-hidden="true">
+                    <span>
+                      от {subService.price} ₽/{subService.unit}
+                    </span>
+                  </div>
+                )}
+
+                <div class="flex items-center gap-2 text-text-primary typo-t2">
+                  <span aria-label={`Цена: от ${showDiscount ? discountedPrice : subService.price} рублей за ${subService.unit}`}>
+                    от {showDiscount ? discountedPrice : subService.price} ₽/{subService.unit}
+                  </span>
+                  {showDiscountValue && (
+                    <div class="p-1 bg-surface-blur text-text-primary-inverse" aria-label={`Скидка ${discountPercent} процентов`}>
+                      <span>-{discountPercent}%</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+    </div>
+  ) : (
+    <div class="_service-empty p-4 lg:p-10 text-center text-text-tertiary">
+      <p>Для данной услуги цены уточняются. Свяжитесь с нами для расчёта стоимости.</p>
+    </div>
+  )
+}

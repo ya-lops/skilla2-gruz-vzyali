@@ -1,0 +1,43 @@
+---
+
+---
+
+<div>
+  <span class="text-text-tertiary typo-t4">Зарплата на руки</span>
+  <span>
+    <span class="typo-t2" x-text="fmt(netSalaryPerHour, 2)"></span>
+    <span class=""> ₽/час</span>
+  </span>
+</div>
+
+<div>
+  <span class="text-text-tertiary typo-t4">Рабочих часов</span>
+  <span>
+    <span class="typo-t2" x-text="fmt(annualHours)"></span>
+    <span class=""> ч./год</span>
+  </span>
+</div>
+
+<div>
+  <span class="text-text-tertiary typo-t4">НДФЛ</span>
+  <span>
+    <span class="typo-t2" x-text="fmt(ndflPerHour, 2)"></span>
+    <span class=""> ₽/час</span>
+  </span>
+</div>
+
+<div>
+  <span class="text-text-tertiary typo-t4">Зарплата с НДФЛ и взносами</span>
+  <span>
+    <span class="typo-t2" x-text="fmt(grossWithInsurancePerHour, 2)"></span>
+    <span class=""> ₽/час (30%)</span>
+  </span>
+</div>
+
+<div>
+  <span class="text-text-tertiary typo-t4">Все затраты на ФОТ с НДС</span>
+  <span>
+    <span class="typo-t2" x-text="fmt(totalCostAnnual)"></span>
+    <span class=""> ₽ (20%)</span>
+  </span>
+</div>

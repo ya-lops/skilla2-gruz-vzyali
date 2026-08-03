@@ -1,0 +1,148 @@
+---
+import type { BrandData } from "@/types/brand";
+
+import { STORAGE_PATH } from "@/lib/consts";
+
+import BlockMessengersLinks from "../blocks/BlockMessengersLinks.astro";
+import BlockAppSkilla from "../blocks/BlockAppSkilla.astro";
+import PhoneReplacement from "../blocks/PhoneReplacement.astro";
+import BlockSocialLinks from "../blocks/BlockSocialLinks.astro";
+import SiteHeaderLogoSvg from "../blocks/SiteHeaderLogoSvg.astro";
+
+interface Props {
+  brandData: BrandData;
+}
+
+const { brandData } = Astro.props;
+---
+
+<footer data-cmp="SiteFooter">
+  <div class="bg-footer-top-surface border-t border-t-outline">
+    <div class="container">
+      <div class="flex flex-col xl:flex-row items-start gap-8 justify-between py-10">
+        <div class="flex flex-col gap-8">
+          <div class="">
+            <a href="/" class="flex">
+              <SiteHeaderLogoSvg />
+            </a>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            {
+              brandData.main.site_phone && (
+                <PhoneReplacement
+                  phone={brandData.main.site_phone}
+                  replacementPhones={brandData.main.site_replacement_phones}
+                  class="typo-t1 text-text-primary hover:underline!"
+                />
+              )
+            }
+
+            {
+              brandData.main.site_phone2 && (
+                <a class="typo-t1 text-text-primary hover:underline!" href={`tel:${brandData.main.site_phone2}`}>
+                  {brandData.main.site_phone2}
+                </a>
+              )
+            }
+
+            <a class="text-text-tertiary hover:underline!" href={`mailto:${brandData.main.site_email}`}>{brandData.main.site_email}</a>
+          </div>
+
+          {
+            brandData.main.site_work_time && (
+              <div class="text-text-tertiary">
+                <p>Время заказов: {brandData.main.site_work_time}</p>
+              </div>
+            )
+          }
+
+          <BlockMessengersLinks showLabel {brandData} class="text-text-primary" />
+
+          <BlockSocialLinks {brandData} />
+        </div>
+
+        <nav
+          class="grid grid-cols-1 lg:grid-cols-[repeat(2,minmax(240px,1fr))] gap-8 text-footer-top-text"
+          aria-label="Навигация в подвале"
+        >
+          <div class="flex flex-col items-start gap-10">
+            <div class="flex flex-col gap-4">
+              <h3 class="typo-h5-x2 text-left">Услуги</h3>
+              <ul class="flex flex-col gap-4">
+                {
+                  brandData.services.map((service) => (
+                    <li>
+                      <a class="typo-t3 hover:text-accent" href={`/${service.url.toLocaleLowerCase()}`}>
+                        {service.name}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-start gap-10">
+            <ul class="flex flex-col gap-10">
+              <li><a class="typo-h5-x2 hover:text-accent" href="/about">О компании</a></li>
+              <li><a class="typo-h5-x2 hover:text-accent" href="/blog">Блог</a></li>
+              <li><a class="typo-h5-x2 hover:text-accent" href="/contacts">Контакты</a></li>
+              {
+                brandData.vacancies?.vacancy_link && (
+                  <li>
+                    <a
+                      class="typo-h5-x2 hover:text-accent"
+                      href={brandData.vacancies?.vacancy_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Сотрудничество
+                      <span class="sr-only">(откроется в новой вкладке)</span>
+                    </a>
+                  </li>
+                )
+              }
+            </ul>
+
+            <div class="flex flex-col gap-4">
+              <h3 class="typo-h5-x2 text-left">Скачать</h3>
+              <ul class="flex flex-col gap-4">
+                {
+                  brandData.main.site_documents.map((document) => (
+                    <li class="_footer-document flex items-baseline gap-2">
+                      <span class="flex gap-2">{document.name}</span>
+                      <a
+                        class="_footer-document-format-link py-0.5 px-1.25 rounded-md text-text-primary hover:text-text-primary-inverse bg-white hover:bg-accent transition-colors"
+                        href={`${STORAGE_PATH}${document.path}`}
+                        download={document.filename}
+                      >
+                        .{document.filename.split(".").pop()}
+                        <span class="sr-only"> — скачать {document.name}</span>
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        {/* Условие для отображения личного кабинета, нужно брать из админки */}
+        {/* сейчас просто написано чтото рандомное */}
+        {/* в MobileNav.astro тоже */}
+        {brandData.main?.showPersonal && <BlockAppSkilla />}
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-footer-bottom-surface border-t border-t-outline">
+    <div class="container">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 py-6 text-footer-bottom-text typo-t4">
+        <p>{brandData.default.name} – {new Date().getFullYear()} г.</p>
+        <p>Информация на данном сайте носит информационный характер и не является офертой. ст. 437 ч. 1 ГК РФ</p>
+        <a class="hover:text-text-primary hover:underline" href="/policy">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </div>
+</footer>

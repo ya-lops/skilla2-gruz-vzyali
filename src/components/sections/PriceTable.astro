@@ -1,0 +1,54 @@
+---
+import type { BrandData } from "@/types/brand";
+import { getDiscountPercent, hasDiscount } from "@/utils/price";
+import CtaCall from "../blocks/CtaCall.astro";
+import PriceTableNavDropdown from "@/components/blocks/PriceTableNavDropdown.astro";
+import PriceTableServices from "@/components/blocks/PriceTableServices.astro";
+
+interface Props {
+  brandData: BrandData;
+}
+
+const { brandData } = Astro.props;
+
+const allServices = brandData.services.filter((service) => service.is_active === 1);
+
+const currentPath = Astro.url.pathname;
+const normalizedPath = currentPath.replace(/\/+$/, "");
+const serviceSlug = normalizedPath.split("/").pop()?.toLowerCase();
+
+const currentService = allServices.find((s) => s.url.toLowerCase() === serviceSlug);
+
+const discountPercent = getDiscountPercent(brandData.main.adv_price_percent);
+---
+
+<section class="py-8 md:py-10 lg:py-20" data-cmp="PriceTable" itemscope itemtype="https://schema.org/Service">
+  <meta itemprop="name" content={currentService?.name || "Услуги"} />
+  <meta itemprop="description" content={currentService?.description || ""} />
+  <meta itemprop="provider" content={brandData.default.name} />
+
+  <div class="container">
+    <h1 class="mb-5 lg:mb-10 typo-h1-x2" itemprop="name">
+      Услуги в {brandData.main.city_rod}
+    </h1>
+
+    <h2 class="sr-only">{currentService?.name}</h2>
+
+    <div class="flex flex-col lg:flex-row gap-5 mb-5 lg:mb-20">
+      <p class="max-w-140 typo-t3 text-text-secondary text-balance" itemprop="description">
+        {
+          currentService?.description ??
+            "Для переезда, склада и стройки. Работаем с погрузчиками, штабелёрами, по доступной цене и без задержек"
+        }
+      </p>
+
+      <div class="w-[min(35rem,100%)] lg:ml-auto">
+        <PriceTableNavDropdown {brandData} services={allServices} />
+      </div>
+    </div>
+
+    {currentService && <PriceTableServices {currentService} {discountPercent} showDiscountValue={false} />}
+
+    <CtaCall {brandData} />
+  </div>
+</section>
