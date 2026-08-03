@@ -32,13 +32,13 @@ const pageMeta = brandData.meta?.find((m) => m.url === currentService.url);
   metaDescription={pageMeta?.description || currentService.description || ''}
   metaKeywords={pageMeta?.keywords || ""}
 >
-  <Breadcrumbs
+  <!-- <Breadcrumbs
     items={[
       { label: "Главная", href: "/" },
       { label: "Услуги и цены", href: `/${firstServiceUrl}` },
       { label: currentService.name },
     ]}
-  />
+  /> -->
 
   <PriceTable {brandData} />
   <CalculatorForm {brandData} />

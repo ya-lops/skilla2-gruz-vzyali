@@ -17,14 +17,14 @@ const brandData = await getBrandData();
 ---
 
 <BaseLayout {brandData}>
-  <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "О компании" }]} />
+  <!-- <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "О компании" }]} /> -->
   <HeroAbout {brandData} />
+  <HowWeWork type="column" {brandData} />
   <Advantages {brandData} />
-  <Testimonials {brandData} />
-  <HowWeWork type="cards" {brandData} />
   <Partners {brandData} full />
+  <Testimonials {brandData} />
   <Thanks {brandData} />
-  <Map {brandData} />
   <Blog {brandData} />
+  <Map {brandData} />
   <KP {brandData} />
 </BaseLayout>

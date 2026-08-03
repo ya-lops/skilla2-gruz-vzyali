@@ -50,18 +50,18 @@ const reqs = [
 
 <section class="contacts py-8 md:py-10 lg:py-20" data-cmp="Contacts">
   <div class="container">
-    <div class="_contacts-inner grid grid-cols-1 lg:grid-cols-[2fr_1fr] items-start gap-20">
-      <div class="_contacts-info">
-        <h1 class="_contacts-title typo-h1 mb-15 text-left">Получите бесплатную консультацию</h1>
+    <h1 class="typo-h1-x2 mb-15 text-left uppercase">Контакты</h1>
 
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] items-start gap-20">
+      <div class="_contacts-info">
         <section class="flex flex-col items-start">
-          <div class="_contacts-phones flex flex-col gap-4">
+          <div class="_contacts-phones flex flex-col gap-10">
             {
               brandData.main.site_phone && (
                 <PhoneReplacement
                   phone={brandData.main.site_phone}
                   replacementPhones={brandData.main.site_replacement_phones}
-                  class="typo-t1 text-text-primary hover:underline!"
+                  class="typo-h5-x2 text-text-primary hover:underline!"
                 />
               )
             }
@@ -79,35 +79,37 @@ const reqs = [
             >
           </div>
 
-          <BlockMessengersLinks {brandData} />
+          <BlockMessengersLinks showLabel {brandData} />
 
           <div class="_contacts-hours mt-8 text-text-tertiary">
             Прием заказов: {brandData.main.site_work_time}
           </div>
         </section>
-
-        <section class="mt-15">
-          <p class="_map-address mb-4">{brandData.main.site_address}</p>
-
-          <Map {brandData} simple />
-        </section>
       </div>
 
-      <div class="_contacts-reqs flex flex-col items-start gap-6 p-4 lg:p-10 border border-outline rounded-2xl">
-        <p class="mb-2 typo-h4">{brandData.default.name}</p>
-        {
-          reqs
-            ?.filter((item: any) => item.value)
-            .map((item: any) => (
-              <div class="_reqs-item">
-                <div class="_label typo-t4 text-text-secondary">{item.label}</div>
-                <div class="_value mt-2 typo-t3">{item.value}</div>
-              </div>
-            ))
-        }
+      <div class="">
+        <p class="typo-h5-x2 mb-10">{brandData.default.name}</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+          {
+            reqs
+              ?.filter((item: any) => item.value)
+              .map((item: any) => (
+                <div class={`_reqs-item ${item.label == "Юр. адрес" ? "col-span-full order-first" : ""}`}>
+                  <div class="_label typo-t4 text-text-secondary">{item.label}</div>
+                  <div class="_value mt-2 typo-t3">{item.value}</div>
+                </div>
+              ))
+          }
+        </div>
 
-        <Button href="https://api2.skilla.ru/api/site/details" text="Скачать реквизиты" />
+        <Button href="https://api2.skilla.ru/api/site/details" variant="secondary" text="Скачать реквизиты" />
       </div>
     </div>
+
+    <section class="mt-10">
+      <p class="mb-4 typo-h5-x2">{brandData.main.site_address}</p>
+
+      <Map {brandData} simple />
+    </section>
   </div>
 </section>

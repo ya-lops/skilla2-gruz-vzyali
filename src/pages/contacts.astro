@@ -10,7 +10,7 @@ const brandData = await getBrandData();
 ---
 
 <BaseLayout {brandData}>
-  <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Контакты" }]} />
+  <!-- <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Контакты" }]} /> -->
 
   <Contacts {brandData} />
   <KP {brandData} />

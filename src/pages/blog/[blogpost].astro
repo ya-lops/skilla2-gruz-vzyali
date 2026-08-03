@@ -32,7 +32,7 @@ if (!article) {
           {article.date_create}
         </time>
 
-        <h1 class="_blogpost-title typo-h1 mb-8">{article.title}</h1>
+        <h1 class="_blogpost-title typo-h1-x2 mb-8">{article.title}</h1>
 
         <!-- Рыба -->
         <p>
@@ -110,12 +110,12 @@ if (!article) {
   @reference "@/styles/global.css";
 
   [data-page="blogpost"] {
-    & :where(h1, h2, h3, h4, h5, h6, ul, ol, img) {
+    & :where(h1, h2, h3, h4, h5, h6, ul, ol, img):not(._blogpost-title) {
       @apply mt-8 lg:mt-20;
     }
 
     & p {
-      @apply typo-t1 max-w-[45.625rem] mt-6;
+      @apply typo-t1 max-w-[45.625rem] mt-6 font-normal;
     }
 
     & img {

@@ -12,16 +12,14 @@ const citiesJson = JSON.stringify(mapData.cities);
 const cityCount = mapData.city_count;
 ---
 
-{simple && <div id="map" class="_map-body h-80 lg:h-105 rounded-2xl overflow-clip" />}
+{simple && <div id="map" class="h-80 lg:h-105 rounded-2xl overflow-clip" data-cmp="Map"/>}
 
 {
   !simple && (
-    <section class="map pb-20" data-cmp="Map">
+    <section class="pb-20" data-cmp="Map">
       <div class="container">
-        <h2 class="_map-title mb-8 md:12 lg:mb-16">Работаем в более чем в {cityCount} городах России</h2>
-        <div class="_map-inner">
-          <div id="map" class="_map-body h-80 lg:h-105 rounded-2xl overflow-clip" />
-        </div>
+        <h2 class="typo-h3-x2 max-w-125 mb-8 md:12 lg:mb-16">Работаем в более чем в {cityCount} городах России</h2>
+        <div id="map" class="_map-body h-80 lg:h-105 rounded-2xl overflow-clip" />
       </div>
     </section>
   )
@@ -29,7 +27,7 @@ const cityCount = mapData.city_count;
 
 <script is:inline define:vars={{ citiesJson }}>
   const script = document.createElement("script");
-  script.src = "https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU";
+  script.src = "https://api-maps.yandex.ru/2.1/?lang=ru_RU";
   script.onload = () => {
     ymaps.ready(() => {
       const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim() || '#FF5722';

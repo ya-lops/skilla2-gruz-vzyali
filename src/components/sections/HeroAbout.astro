@@ -12,30 +12,25 @@ const { brandData } = Astro.props;
 const firstServiceUrl = brandData.services[0].url.toLowerCase();
 ---
 
-<section
-      class="hero grid grid-cols-[100%] min-h-[600px] bg-hero-about-surface text-hero-about-text overflow-clip isolate"
-      data-cmp="Hero"
-    >
-      <div class="container h-full">
-        <div class="_hero-inner relative grid grid-cols-1 lg:grid-cols-3 items-start lg:items-center h-full ">
-          <div class="_hero-content flex flex-col gap-10 py-8 row-start-1 col-start-1 col-span-2">
-            <h1 class="_hero-title typo-h1 text-left text-balance">Успешно оказываем услуги 15 лет</h1>
+<section class="relative z-2 hero grid grid-cols-[100%] min-h-[630px] my-4" data-cmp="HeroAbout">
+  <div class="container h-full isolate">
+    <div class="grid grid-cols-1 grid-rows-[1fr_auto] lg:grid-rows-1 lg:grid-cols-[1fr_427px] gap-3 h-full isolate">
+      <div class="flex flex-col gap-6 p-4 max-lg:pb-40 lg:p-10 bg-hero-main-surface text-hero-main-text rounded-[20px] lg:rounded-[40px]">
+        <h1 class="max-w-[50rem] typo-h1-x2 uppercase leading-[80%]">87 000<br>заказов за 10&nbsp;лет работы</h1>
 
-            <p class="_hero-description typo-t3 max-w-92 text-balance">
-              Мы предлагаем надёжные услуги по грузоперевозкам и предоставлению разнорабочих. Работаем оперативно и учитываем потребности
-              каждого клиента.
-            </p>
-
-            <div class="_hero-actions flex items-center gap-8">
-              <div class="_hero-actions-items">
-                <Button href={`/${firstServiceUrl}`} variant="secondary" text="Наши услуги" />
-              </div>
-            </div>
-          </div>
-
-          <div class="_hero-image flex justify-center self-end lg:col-start-2 lg:row-start-1 lg:col-span-2 ">
-            <img src="/images/hero-about.webp" alt="" fetchpriority="high" class="max-w-[250%] w-[175%] lg:w-[105%]" />
-          </div>
+        <div class="mt-auto">
+          <Button href={`/${firstServiceUrl}`} variant="accent" text="Наши услуги" />
         </div>
       </div>
-    </section>
+
+      <div class="z-1 max-lg:max-h-[200px] flex items-end justify-end rounded-[20px] lg:rounded-[40px] add-gradient">
+        <img
+          src="/images/hero-about.webp"
+          alt=""
+          fetchpriority="high"
+          class="lg:max-w-max max-lg:max-h-[360px]"
+        />
+      </div>
+    </div>
+  </div>
+</section>

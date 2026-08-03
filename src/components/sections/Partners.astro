@@ -14,9 +14,9 @@ const { brandData, full = false } = Astro.props;
 const allPartnersLogos = [...brandData.partners.default_logos, ...(brandData.partners.additional_logos || [])];
 ---
 
-<section class:list={["partners", full ? "py-8 md:py-10 lg:py-20" : "py-10"]} data-cmp="Partners">
+<section class:list={[full ? "py-8 md:py-10 lg:py-20" : "py-10"]} data-cmp="Partners">
   <div class="container">
-    {full && <h2 class="mb-8 md:12 lg:mb-16 typo-h2-x2">Наши клиенты</h2>}
+    {full && <h2 class="mb-8 md:12 lg:mb-16 typo-h3-x2 uppercase">Наши клиенты</h2>}
 
     <div
       class:list={[
@@ -31,12 +31,12 @@ const allPartnersLogos = [...brandData.partners.default_logos, ...(brandData.par
             class:list={[
               "flex items-center justify-center",
               full
-                ? "h-25 lg:h-50 w-full border border-outline rounded-xl bg-surface-primary"
+                ? "h-25 lg:h-50 w-full rounded-xl bg-white"
                 : "shrink-0 max-h-8 lg:max-h-[75px] max-w-[156px]",
             ]}
           >
             <img
-              class:list={["h-full w-full object-contain", full ? "max-w-[100%] max-h-[100%]" : ""]}
+              class:list={["h-full w-full object-contain", full ? "max-w-[35%] max-h-[35%]" : ""]}
               src={`${STORAGE_PATH}${logo}`}
               alt={`Логотип партнера нашей компании`}
             />
