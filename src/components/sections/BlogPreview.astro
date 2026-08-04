@@ -30,6 +30,7 @@ const blog = brandData.articles?.slice(0, 3) || [
                 <img
                   src={blogpost.imagePreview || "/images/blogpost-1.webp"}
                   alt={`Превью-изображение для записи блога ${blogpost.title}`}
+                  class="pointer-events-none"
                 />
                 <h3 class="_blogpost-title px-4 text-left">{blogpost.title}</h3>
                 <p class="_blogpost-description px-4">{blogpost.description}</p>

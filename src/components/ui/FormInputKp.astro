@@ -22,22 +22,22 @@ const {
 <div class={`relative ${className}`} x-data="{ focused: false }">
   <input
     x-ref="input"
-    :id="id"
+    id={id}
     type={type}
     x-model={model}
     @focus="focused = true"
     @blur="focused = false"
-    class="peer w-full h-[70px] px-4 pt-6 pb-2 border rounded-sm bg-surface-primary outline-none transition-all"
-    :class="`${errorModel} ? 'border-red-600' : focused ? 'border-accent' : 'border-outline'`"
+    class="peer w-full h-[70px] px-4 pt-6 pb-2 border rounded-2xl bg-surface-primary outline-none transition-all"
+    :class={`${errorModel} ? 'border-red-600' : focused ? 'border-accent' : 'border-transparent'`}
     placeholder=" "
     {...rest}
   />
   <label
-    :for="id"
-    class="absolute left-4 top-1/2 -translate-y-1/2 typo-t4 text-text-tertiary transition-all pointer-events-none select-none
-           peer-focus:top-3 peer-focus:translate-y-0 peer-focus:typo-label peer-focus:text-accent
+    for={id}
+    class="absolute left-4 top-1/2 -translate-y-1/2 typo-t4 transition-all pointer-events-none select-none
+           peer-focus:top-3 peer-focus:translate-y-0 peer-focus:typo-label
            peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:typo-label"
-    :class="focused ? '!text-accent' : ''"
+    :class={`${errorModel} ? '!text-red-600' : focused ? '!text-accent' : 'text-text-tertiary'`}
   >
     {label}
   </label>

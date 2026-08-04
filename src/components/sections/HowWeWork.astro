@@ -50,7 +50,7 @@ const stepsImages = [
                 <div class="relative grid w-[min(100%,383px)] aspect-383/296 p-6 rounded-[20px] md:rounded-[40px] add-gradient isolate shrink-0">
                   <div class={`relative z-1 text-text-primary-inverse typo-h3-x2 ${isEven ? "md:justify-self-end" : ""}`}>{index + 1}.</div>
                   <img
-                    class={`absolute place-self-center pointer-events-none max-md:translate-x-[10%] ${isEven ? "md:translate-x-[-33%]" : "md:translate-x-[33%]"}`}
+                    class={`absolute place-self-center pointer-events-none max-md:translate-x-[10%] ${isEven ? "md:translate-x-[-33%]" : "md:translate-x-[33%]"} pointer-events-none`}
                     src={step.image}
                     alt=""
                     loading="lazy"

@@ -21,7 +21,7 @@ const { brandData } = Astro.props;
             <div class="flex items-start justify-center w-19 h-19 aspect-square mb-4 rounded-xl overflow-clip">
               {testimonial.avatar ? (
                 <img
-                  class="w-full h-full object-cover object-top"
+                  class="w-full h-full object-cover object-top pointer-events-none"
                   src={`${STORAGE_PATH}${testimonial.avatar}`}
                   alt={`Аватар ${testimonial.name} `}
                   loading="lazy"

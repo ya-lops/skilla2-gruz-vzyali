@@ -67,8 +67,8 @@ const { brandData } = Astro.props;
     </button>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-2">
-      <section class="p-6 lg:p-8 bg-surface-primary-inverse rounded-2xl">
-        <h3 class="mb-8 typo-h3 text-left text-text-primary-inverse">Позвоните нам по номеру</h3>
+      <section class="p-6 lg:p-8 add-gradient rounded-2xl">
+        <h3 class="mb-8 typo-h3-x2 text-left text-text-primary-inverse uppercase">Позвоните нам по номеру</h3>
         <div class="flex flex-col gap-4">
           <PhoneReplacement
             phone={brandData.main.site_phone}
@@ -90,15 +90,15 @@ const { brandData } = Astro.props;
         }
       </section>
 
-      <section class="p-6 lg:p-8 bg-surface-secondary rounded-2xl">
-        <h3 class="mb-8 typo-h3 text-left text-text-primary">Или оставьте заявку на обратный звонок</h3>
+      <section class="p-6 lg:p-8 bg-surface-primary-inverse rounded-2xl">
+        <h3 class="mb-8 typo-h3-x2 text-left text-text-primary-inverse uppercase">Или оставьте заявку</h3>
         <form class="flex flex-col gap-3" @submit.prevent="submitForm()" novalidate>
           <FormInput
             id="modal-name"
             label="Имя"
             model="form.name"
             errorModel="errors.name"
-            class="rounded-sm bg-surface-secondary typo-t4"
+            class="rounded-xl"
             required
           />
 
@@ -106,15 +106,16 @@ const { brandData } = Astro.props;
             id="modal-phone"
             type="tel"
             label="Телефон"
-            placeholder="Телефон"
             model="form.phone"
             errorModel="errors.phone"
-            class="rounded-sm bg-surface-secondary typo-t4"
+            class="rounded-xl"
             required
           />
 
           <FormCheckbox id="modal-agree" model="form.agree" errorModel="errors.agree">
-            Соглашаюсь с <a href="/policy" class="underline">политикой обработки персональных данных</a>
+            <span class="text-text-primary-inverse"
+              >Соглашаюсь с <a href="/policy" class="underline">политикой обработки персональных данных</a></span
+            >
           </FormCheckbox>
 
           <div class="mt-2">

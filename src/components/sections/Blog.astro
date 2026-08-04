@@ -27,7 +27,7 @@ const articles = showLast ? brandData.articles?.slice(0, 3) : brandData.articles
               <article class="flex flex-col items-start gap-4 text-left">
                 <a class="contents" href={`/blog/${blogpost.url}`}>
                   {blogpost.imagePreview ? (
-                    <img src={blogpost.imagePreview} alt={`Превью-изображение для записи блога ${blogpost.title}`} loading="lazy" />
+                    <img src={blogpost.imagePreview} alt={`Превью-изображение для записи блога ${blogpost.title}`} loading="lazy" class="pointer-events-none"/>
                   ) : (
                     <div class="w-full rounded-2xl bg-gray-200 aspect-video" />
                   )}

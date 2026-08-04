@@ -36,7 +36,7 @@ const allPartnersLogos = [...brandData.partners.default_logos, ...(brandData.par
             ]}
           >
             <img
-              class:list={["h-full w-full object-contain", full ? "max-w-[35%] max-h-[35%]" : ""]}
+              class:list={["h-full w-full object-contain pointer-events-none", full ? "max-w-[35%] max-h-[35%]" : ""]}
               src={`${STORAGE_PATH}${logo}`}
               alt={`Логотип партнера нашей компании`}
             />
