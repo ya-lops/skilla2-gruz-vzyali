@@ -5,12 +5,11 @@ export interface Props {
   type?: any;
   text?: string;
   variant?: "primary" | "secondary" | "accent";
-  inverse?: boolean;
   arrow?: "left" | "right";
   href?: string;
 }
 
-const { tag: Tag = "a", type, text, class: Classname, variant = "primary", inverse = false, arrow, href, ...rest } = Astro.props;
+const { tag: Tag = "a", type, text, class: Classname, variant = "primary", arrow, href, ...rest } = Astro.props;
 
 // Базовые классы
 const baseClasses =
@@ -18,15 +17,12 @@ const baseClasses =
 
 // Классы для разных типов
 const variantClasses = {
-  accent: inverse
-    ? "bg-button-accent-inverse-surface hover:bg-button-accent-inverse-surface_hover text-button-accent-inverse-text hover:text-button-accent-inverse-text_hover border border-button-accent-inverse-border hover:border-button-accent-inverse-border_hover"
-    : "bg-button-accent-surface hover:bg-button-accent-surface_hover text-button-accent-text hover:text-button-accent-text_hover border border-button-accent-border hover:border-button-accent-border_hover",
-  primary: inverse
-    ? "bg-button-primary-inverse-surface hover:bg-button-primary-inverse-surface_hover text-button-primary-inverse-text hover:text-button-primary-inverse-text_hover border border-button-primary-inverse-border hover:border-button-primary-inverse-border_hover"
-    : "bg-button-primary-surface hover:bg-button-primary-surface_hover text-button-primary-text hover:text-button-primary-text_hover border border-button-primary-border hover:border-button-primary-border_hover",
-  secondary: inverse
-    ? "bg-button-secondary-inverse-surface hover:bg-button-secondary-inverse-surface_hover text-button-secondary-inverse-text hover:text-button-secondary-inverse-text_hover border border-button-secondary-inverse-border hover:border-button-secondary-inverse-border_hover"
-    : "bg-button-secondary-surface hover:bg-button-secondary-surface_hover text-button-secondary-text hover:text-button-secondary-text_hover border border-button-secondary-border hover:border-button-secondary-border_hover",
+  accent:
+    "bg-button-accent-surface hover:bg-button-accent-surface_hover text-button-accent-text hover:text-button-accent-text_hover border border-button-accent-border hover:border-button-accent-border_hover",
+  primary:
+    "bg-button-primary-surface hover:bg-button-primary-surface_hover text-button-primary-text hover:text-button-primary-text_hover border border-button-primary-border hover:border-button-primary-border_hover",
+  secondary:
+    "bg-button-secondary-surface hover:bg-button-secondary-surface_hover text-button-secondary-text hover:text-button-secondary-text_hover border border-button-secondary-border hover:border-button-secondary-border_hover",
 };
 
 const buttonClasses = `${baseClasses} ${variantClasses[variant]}`;
