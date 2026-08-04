@@ -8,13 +8,13 @@ const brandData = await getBrandData();
 ---
 
 <BaseLayout brandData={brandData}>
-  <section class="pt-5 pb-20 bg-surface-secondary">
+  <section class="py-40">
     <div class="container">
       <div class="_404 flex flex-col items-center">
-        <span class="text-[clamp(180px,15vw,516px)] text-text-primary-inverse">404</span>
+        <span class="text-[clamp(200px,20vw,516px)] text-text-primary font-heading font-semibold leading-[100%]">404</span>
         <p class="typo-t1 text-center">Такой страницы не существует</p>
         <Button href="/" variant="accent" class="mt-7" text="На главную" />
       </div>
     </div>
-  </section></BaseLayout
->
+  </section>
+</BaseLayout>
