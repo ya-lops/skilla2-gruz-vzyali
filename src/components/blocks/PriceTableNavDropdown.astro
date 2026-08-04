@@ -21,10 +21,10 @@ const selectedLabel = activeService?.name || services[0]?.name || "";
   <button
     type="button"
     x-on:click="open = !open"
-    class="w-full flex items-center justify-between p-3 border border-outline rounded-xl typo-button bg-surface-primary hover:bg-surface-secondary transition-colors cursor-pointer"
+    class="w-full flex items-center justify-between p-3 border border-outline rounded-xl typo-button bg-white hover:border-accent focus:border-accent focus:outline-none transition-colors cursor-pointer"
   >
     <span x-text="selected"></span>
-    <IconSvg name="chevron-down" :class="open ? 'rotate-180' : ''" />
+    <IconSvg name="chevron-down" :class="open ? 'rotate-180 text-accent' : ''" />
   </button>
 
   <!-- Подложка (только мобилка) -->
@@ -46,7 +46,7 @@ const selectedLabel = activeService?.name || services[0]?.name || "";
     x-show="open"
     x-cloak
     x-on:click.outside="open = false"
-    class="absolute top-full left-0 right-0 z-20 min-h-15 mt-2 p-3 bg-surface-primary border border-outline rounded-xl shadow-lg cursor-pointer
+    class="absolute top-full left-0 right-0 z-20 min-h-15 mt-2 p-3 bg-white rounded-xl shadow-lg cursor-pointer
            lg:block
            max-lg:fixed max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-auto max-lg:mt-0 max-lg:max-h-[70vh] max-lg:rounded-t-2xl max-lg:rounded-b-none overflow-auto overscroll-contain"
     x-transition:enter="transition ease-out duration-200"
@@ -67,11 +67,12 @@ const selectedLabel = activeService?.name || services[0]?.name || "";
               href={serviceUrl}
               x-on:click="open = false; selected = $el.textContent.trim()"
               class:list={[
-                "block p-4 rounded-sm hover:bg-surface-secondary typo-t3 transition-colors select-none",
-                isActive ? "bg-surface-secondary" : "bg-transparent",
+                "flex justify-between gap-3 p-4 rounded-sm hover:bg-surface-secondary typo-t3 transition-colors select-none",
+                isActive ? "text-accent" : "bg-transparent",
               ]}
             >
-              {service.name}
+              <span>{service.name}</span>
+              {isActive && <IconSvg name="check" />}
             </a>
           );
         })
