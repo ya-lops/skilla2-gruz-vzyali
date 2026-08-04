@@ -1,56 +1,57 @@
-/* alumni-sans-regular - cyrillic_cyrillic-ext_latin */
+/* oswald-regular - cyrillic_latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Alumni Sans';
+  font-family: 'Oswald';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/oswald-v57-cyrillic_latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-/* alumni-sans-500 - cyrillic_cyrillic-ext_latin */
+/* oswald-500 - cyrillic_latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Alumni Sans';
+  font-family: 'Oswald';
   font-style: normal;
   font-weight: 500;
-  src: url('/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/oswald-v57-cyrillic_latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-/* alumni-sans-600 - cyrillic_cyrillic-ext_latin */
+/* oswald-600 - cyrillic_latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Alumni Sans';
+  font-family: 'Oswald';
   font-style: normal;
   font-weight: 600;
-  src: url('/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/oswald-v57-cyrillic_latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-/* alumni-sans-700 - cyrillic_cyrillic-ext_latin */
+/* oswald-700 - cyrillic_latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Alumni Sans';
+  font-family: 'Oswald';
   font-style: normal;
   font-weight: 700;
-  src: url('/fonts/alumni-sans-v20-cyrillic_cyrillic-ext_latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/oswald-v57-cyrillic_latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-/* golos-text-regular - cyrillic_cyrillic-ext_latin */
+
+/* mulish-regular - cyrillic_latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Golos Text';
+  font-family: 'Mulish';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/golos-text-v7-cyrillic_cyrillic-ext_latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/mulish-v18-cyrillic_latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-/* golos-text-500 - cyrillic_cyrillic-ext_latin */
+/* mulish-500 - cyrillic_latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Golos Text';
+  font-family: 'Mulish';
   font-style: normal;
   font-weight: 500;
-  src: url('/fonts/golos-text-v7-cyrillic_cyrillic-ext_latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/mulish-v18-cyrillic_latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-/* golos-text-600 - cyrillic_cyrillic-ext_latin */
+/* mulish-600 - cyrillic_latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Golos Text';
+  font-family: 'Mulish';
   font-style: normal;
   font-weight: 600;
-  src: url('/fonts/golos-text-v7-cyrillic_cyrillic-ext_latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/mulish-v18-cyrillic_latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }

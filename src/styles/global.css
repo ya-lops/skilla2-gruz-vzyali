@@ -7,8 +7,8 @@
 }
 
 :root {
-  --site-font-base: 'Golos Text', sans-serif;
-  --site-font-heading: 'Alumni Sans', sans-serif;
+  --site-font-base: 'Mulish', sans-serif;
+  --site-font-heading: 'Oswald', sans-serif;
 }
 
 @utility font-base {
