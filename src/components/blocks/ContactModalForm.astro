@@ -68,7 +68,7 @@ const { brandData } = Astro.props;
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-2">
       <section class="p-6 lg:p-8 add-gradient rounded-2xl">
-        <h3 class="mb-8 typo-h3-x2 text-left text-text-primary-inverse uppercase">Позвоните нам по номеру</h3>
+        <h3 class="mb-8 typo-h5-x2 text-left text-text-primary-inverse uppercase">Позвоните нам по номеру</h3>
         <div class="flex flex-col gap-4">
           <PhoneReplacement
             phone={brandData.main.site_phone}
@@ -91,7 +91,7 @@ const { brandData } = Astro.props;
       </section>
 
       <section class="p-6 lg:p-8 bg-surface-primary-inverse rounded-2xl">
-        <h3 class="mb-8 typo-h3-x2 text-left text-text-primary-inverse uppercase">Или оставьте заявку</h3>
+        <h3 class="mb-8 typo-h5-x2 text-left text-text-primary-inverse uppercase">Или оставьте заявку</h3>
         <form class="flex flex-col gap-3" @submit.prevent="submitForm()" novalidate>
           <FormInput
             id="modal-name"

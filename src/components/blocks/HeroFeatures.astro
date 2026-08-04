@@ -9,39 +9,38 @@ const { brandData } = Astro.props;
 
 const features = [
   {
-    icon: "24",
-    text: "Круглосуточно<br>выполняем заказы",
-    classes: "rotate-[13.16deg]",
-  },
-  {
-    icon: "doc",
+    icon: "doc-duo",
     text: "Работаем<br>по договору",
-    classes: "rotate-[-1.72deg]",
+    classes: "",
   },
   {
     icon: "card",
     text: "Рассрочка при<br>крупных заказах",
-    classes: "translate-x-[-17%] rotate-[12.67deg]",
+    classes: "",
   },
   {
-    icon: "calendar",
-    text: "15 лет<br>на рынке",
-    classes: "translate-x-[-10%] rotate-[-2.13deg]",
+    icon: "24",
+    text: "Круглосуточно<br>выполняем заказы",
+    classes: "",
   },
 ];
 ---
 
-<section class="flex flex-col gap-1 items-end" data-cmp="HeroFeatures">
-  {
-    features.map((feature) => (
-      <div class={`inline-flex items-center gap-3 py-4 px-3 pr-5 bg-surface-primary rounded-3xl ${feature.classes}`}>
-        <div class=" shrink-0 text-accent">
-          <IconSvg name={feature.icon} size={26} />
+<section class="grid grid-cols-2 md:grid-cols-[auto_1fr] lg:items-center gap-5 md:gap-10 py-10 lg:py-15 text-text-primary-inverse" data-cmp="HeroFeatures">
+  <h2 class="max-w-140 typo-h3 md:-x2 uppercase text-balance">Лучший сервсис для вашего бизнеса</h2>
+
+  <div class="flex flex-col flex-1 lg:flex-row gap-12 lg:justify-around">
+    {
+      features.map((feature) => (
+        <div class={`flex flex-col gap-3 py-4 ${feature.classes}`}>
+          <div class="shrink-0 ">
+            <IconSvg name={feature.icon} size={50} />
+          </div>
+          <div class="typo-t3 ">
+            <Fragment set:html={feature.text} />
+          </div>
         </div>
-        <div class="typo-t3">
-          <Fragment set:html={feature.text} />
-        </div>
-      </div>
-    ))
-  }
+      ))
+    }
+  </div>
 </section>

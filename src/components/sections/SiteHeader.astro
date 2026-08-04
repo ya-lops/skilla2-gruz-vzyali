@@ -4,7 +4,6 @@ import type { BrandData } from "@/types/brand";
 import BlockMessengersLinks from "../blocks/BlockMessengersLinks.astro";
 import Button from "@/components/ui/Button.astro";
 import MobileNav from "@/components/blocks/MobileNav.astro";
-import SiteHeaderLogoSvg from "../blocks/SiteHeaderLogoSvg.astro";
 
 interface Props {
   brandData: BrandData;
@@ -32,7 +31,11 @@ const links = [
       <div class="_header-inner flex items-center justify-between gap-4 py-4 lg:py-6">
         <div class="_header-logo">
           <a href="/" class="flex">
-            <SiteHeaderLogoSvg />
+            <img
+              class="w-auto"
+              src={brandData.default.logo || "/images/logo-main.webp"}
+              alt={`Логотип компании ${brandData.default?.name}`}
+            />
           </a>
         </div>
 
@@ -64,9 +67,9 @@ const links = [
             {/* Условие для отображения личного кабинета, нужно брать из админки */}
             {/* сейчас просто написано чтото рандомное */}
             {/* в MobileNav.astro тоже */}
-            {brandData.main?.showPersonal && <Button href="#personal" text="Личный кабинет" variant="secondary" inverse />}
+            {brandData.main?.showPersonal && <Button href="#personal" text="Личный кабинет" variant="secondary" />}
             <!-- <Button href="#personal" text="Личный кабинет" variant="secondary" /> -->
-            <Button href="#contact" text="Позвонить" variant="accent" />
+            <Button href="#contact" text="Позвонить" variant="primary" />
           </div>
         </div>
 

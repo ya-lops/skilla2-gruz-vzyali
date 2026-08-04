@@ -38,76 +38,68 @@ const advantages = [
 ];
 ---
 
-<section class="py-8 md:py-10 lg:py-20" data-cmp="Advantages">
+<section class="py-8 md:py-10 lg:py-25 bg-surface-primary-inverse" data-cmp="Advantages">
   <div class="container">
-    <h2 class="typo-h3-x2 uppercase mb-8 md:12 lg:mb-16">Преимущества аутсорса</h2>
+    <h2 class="typo-h3-x2 uppercase mb-8 md:12 lg:mb-16 text-text-primary-inverse">Преимущества аутсорса</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div class="p-5 lg:p-10 rounded-[20px] lg:rounded-[40px] bg-surface-secondary">
-        <h3 class="typo-h4-x2 uppercase mb-10">Штатные сотрудники</h3>
+      <div class="p-5 lg:p-10 rounded-[20px] lg:rounded-[40px] bg-surface-primary-inverse border-2 border-[#176ABD]">
+        <h3 class="typo-h5-x2 uppercase mb-10 text-text-primary-inverse">Штатные сотрудники</h3>
         <div class="flex flex-col gap-2.5">
           {
             advantages?.map((advantage: any) => (
               <div
-                class={`flex items-center gap-6 lg:gap-10 p-4 lg:p-7 rounded-3xl ${advantage.checked ? "bg-white text-text-primary" : "text-text-secondary"}`}
+                class={`flex items-center gap-6 lg:gap-10 p-4 lg:p-7 rounded-3xl ${advantage.checked ? "bg-[#176ABD] text-text-primary-inverse" : "text-text-primary-inverse"}`}
               >
-                <div class="flex items-center justify-center rounded-full overflow-clip">
+                <div class="flex items-center justify-center rounded-full text-text-tertiary-inverse overflow-clip">
                   {advantage.checked ? (
                     <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="55" height="55" rx="27.5" fill="white" />
                       <rect width="55" height="55" rx="27.5" fill="url(#paint0_linear_23_4416)" />
-                      <rect width="55" height="55" rx="27.5" fill="#F86D3E" />
+                      <rect width="55" height="55" rx="27.5" fill="#D01C3F" />
                       <path
                         fill-rule="evenodd"
                         clip-rule="evenodd"
                         d="M40.0241 18.226C40.6587 18.8606 40.6587 19.8894 40.0241 20.524L24.9231 35.625C23.6539 36.8942 21.5961 36.8942 20.3269 35.625L13.351 28.649C12.7163 28.0144 12.7163 26.9856 13.351 26.351C13.9856 25.7164 15.0144 25.7164 15.649 26.351L22.625 33.3269L37.726 18.226C38.3606 17.5913 39.3895 17.5913 40.0241 18.226Z"
                         fill="white"
                       />
-                      <defs>
-                        <linearGradient id="paint0_linear_23_4416" x1="27.5" y1="0" x2="27.5" y2="55" gradientUnits="userSpaceOnUse">
-                          <stop stop-color="#FFAF68" />
-                          <stop offset="1" stop-color="#F07A51" />
-                        </linearGradient>
-                      </defs>
                     </svg>
                   ) : (
                     <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24">
-	<path d="M0 0h24v24H0z" fill="none" />
-	<path fill="currentColor" fill-rule="evenodd" d="M12 18.5A6.5 6.5 0 0 1 6.93 7.931l9.139 9.138A6.47 6.47 0 0 1 12 18.5m5.123-2.498a6.5 6.5 0 0 0-9.124-9.124zM4 12a8 8 0 1 1 16 0a8 8 0 0 1-16 0" clip-rule="evenodd" />
-</svg>
-
+                      <path d="M0 0h24v24H0z" fill="none" />
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        d="M12 18.5A6.5 6.5 0 0 1 6.93 7.931l9.139 9.138A6.47 6.47 0 0 1 12 18.5m5.123-2.498a6.5 6.5 0 0 0-9.124-9.124zM4 12a8 8 0 1 1 16 0a8 8 0 0 1-16 0"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
                   )}
                 </div>
 
-                <p class="typo-t2">{advantage.name}</p>
+                <p class="typo-t2 text-text-tertiary-inverse">{advantage.name}</p>
               </div>
             ))
           }
         </div>
       </div>
 
-      <div class="p-5 lg:p-10 rounded-[20px] lg:rounded-[40px] bg-surface-primary-inverse text-text-primary-inverse">
-        <h3 class="typo-h4-x2 uppercase mb-10">Аутсорс</h3>
+      <div class="p-5 lg:p-10 rounded-[20px] lg:rounded-[40px] bg-[#176ABD] text-text-primary-inverse border-2 border-[#176ABD]">
+        <h3 class="typo-h5-x2 uppercase mb-10 text-text-primary-inverse">Аутсорс</h3>
         <div class="flex flex-col gap-2.5">
           {
             advantages?.map((advantage: any) => (
-              <div class="flex items-center gap-6 lg:gap-10 p-4 lg:p-7 rounded-3xl bg-[hsla(211,36%,12%,1)]">
+              <div class="flex items-center gap-6 lg:gap-10 p-4 lg:p-7 rounded-3xl bg-[#2A80D7]">
                 <div class="flex items-center justify-center">
                   <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="55" height="55" rx="27.5" fill="white" />
                     <rect width="55" height="55" rx="27.5" fill="url(#paint0_linear_23_4416)" />
-                    <rect width="55" height="55" rx="27.5" fill="#F86D3E" />
+                    <rect width="55" height="55" rx="27.5" fill="#D01C3F" />
                     <path
                       fill-rule="evenodd"
                       clip-rule="evenodd"
                       d="M40.0241 18.226C40.6587 18.8606 40.6587 19.8894 40.0241 20.524L24.9231 35.625C23.6539 36.8942 21.5961 36.8942 20.3269 35.625L13.351 28.649C12.7163 28.0144 12.7163 26.9856 13.351 26.351C13.9856 25.7164 15.0144 25.7164 15.649 26.351L22.625 33.3269L37.726 18.226C38.3606 17.5913 39.3895 17.5913 40.0241 18.226Z"
                       fill="white"
                     />
-                    <defs>
-                      <linearGradient id="paint0_linear_23_4416" x1="27.5" y1="0" x2="27.5" y2="55" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#FFAF68" />
-                        <stop offset="1" stop-color="#F07A51" />
-                      </linearGradient>
-                    </defs>
                   </svg>
                 </div>
 

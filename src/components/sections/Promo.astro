@@ -27,7 +27,7 @@ function replaceDatePlaceholder(text: string): string {
 }
 
 // Классы для подсветки скидки
-const discountHighlightClasses = "py-1 px-1.5 md:px-2.5 text-text-primary-inverse bg-[#192532] rounded-xl";
+const discountHighlightClasses = "py-1 px-1.5 md:px-2.5 text-text-primary-inverse bg-[#D01C3F] rounded-xl";
 
 // Оборачиваем скидку и применяем классы выше
 function wrapDiscountInSpan(text: string): string {
@@ -48,10 +48,10 @@ const description = chosenAction ? replaceDatePlaceholder(chosenAction.descripti
 
 {
   description && (
-    <section class="promo bg-promo-surface overflow-clip" data-cmp="Promo">
+    <section class="promo bg-promo-surface border-b border-b-outline overflow-clip" data-cmp="Promo">
       <div class="container flex items-center justify-between gap-7 max-w-200 lg:mx-auto py-2 md:py-2">
         <p class="text-promo-text-primary typo-t3 lg:typo-t2 font-medium" set:html={wrapDiscountInSpan(description)} />
-        <Button href={`/${firstServiceUrl}`} variant="accent" class="!h-[38px]">
+        <Button href={`/${firstServiceUrl}`} variant="primary" class="!h-[40px]">
           <span class="hidden md:block">В каталог</span>
           <IconSvg class="max-md:block" name="arrow-right"/>
         </Button>

@@ -35,7 +35,7 @@ const stepsImages = [
 
 <section class="py-8 md:py-10 lg:py-20 overflow-clip" data-cmp="HowWeWork">
   <div class="container">
-    <h2 class="typo-h2-x2 pb-10 lg:pb-15">Как мы работаем</h2>
+    <h2 class="typo-h3-x2 pb-10 lg:pb-15">Как мы работаем</h2>
 
     {
       type == "column" && (
@@ -48,7 +48,7 @@ const stepsImages = [
                 class={`_step flex max-md:flex-col md:items-center gap-10 md:gap-40 w-full max-w-230 md:px-15 ${isEven ? "ml-auto flex-row-reverse" : ""}`}
               >
                 <div class="relative grid w-[min(100%,383px)] aspect-383/296 p-6 rounded-[20px] md:rounded-[40px] add-gradient isolate shrink-0">
-                  <div class={`relative z-1 text-text-primary-inverse typo-h3-x2 ${isEven ? "md:justify-self-end" : ""}`}>{index + 1}.</div>
+                  <div class={`relative z-1 text-text-primary-inverse typo-h5-x2 ${isEven ? "md:justify-self-end" : ""}`}>{index + 1}.</div>
                   <img
                     class={`absolute place-self-center pointer-events-none max-md:translate-x-[10%] ${isEven ? "md:translate-x-[-33%]" : "md:translate-x-[33%]"} pointer-events-none`}
                     src={step.image}
@@ -77,11 +77,11 @@ const stepsImages = [
               <div class={`_step grid grid-cols-1 md:grid-cols-2 p-10 rounded-3xl bg-white`}>
                 <div class="flex md:flex-col">
                   <div class="md:contents">
-                    <h3 class="typo-h4-x2">{step.title}</h3>
+                    <h3 class="typo-h5-x2">{step.title}</h3>
                     <p class="mt-3">{step.description}</p>
                   </div>
 
-                  <div class={`mt-auto text-text-primary typo-h3-x2`}>{index + 1}.</div>
+                  <div class={`mt-auto text-surface-primary-inverse typo-h3-x2`}>{index + 1}.</div>
                 </div>
 
                 <div class="grid place-items-center aspect-square rounded-full bg-surface-secondary">

@@ -23,7 +23,7 @@ const { price, discountedPrice, showDiscount } = getGlobalMinPriceWithDiscount(b
     <h2 class="max-w-180 mb-15 typo-h3-x2 uppercase">Калькулятор стоимости вашего персонала</h2>
 
     <div x-data="employeeCostCalculator()">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-7">
         <CalcInput id="calc-net-salary" label="Зарплата на руки" model="netSalary" unit="₽" min="10000" max="300000" step="10000" />
 
         <CalcInput id="calc-work-hours" label="Рабочих часов в месяц" model="workHoursMonth" unit="ч./мес" min="0" max="300" />
@@ -55,10 +55,10 @@ const { price, discountedPrice, showDiscount } = getGlobalMinPriceWithDiscount(b
 
       <div class="mt-14">
         <div class="grid grid-cols-1 lg:grid-cols-[1.125fr_2fr] gap-10 items-stretch">
-          <div class="py-6 lg:py-10">
+          <div class="p-10 bg-white rounded-[20px]">
             <p class="typo-t4">Стоимость ваших сотрудников</p>
             <p class="mt-6 font-heading">
-              <span class="typo-h3-x2" x-text="fmt(totalPerHour, 2)"></span>
+              <span class="typo-h5-x2" x-text="fmt(totalPerHour, 2)"></span>
               <span>₽</span>/час
             </p>
 

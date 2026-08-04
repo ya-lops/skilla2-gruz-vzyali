@@ -8,10 +8,9 @@ import IconService from "@/components/IconService.astro";
 
 interface Props {
   brandData: BrandData;
-  media: "icon" | "image";
 }
 
-const { brandData, media = "image" } = Astro.props;
+const { brandData } = Astro.props;
 
 const firstServiceUrl = brandData.services[0].url.toLowerCase();
 
@@ -22,9 +21,6 @@ function getMinPriceService(subServices: Array<{ price: string; unit: string; na
 
 // Получаем скидку по акции
 const discount = getDiscountPercent(brandData.main.adv_price_percent);
-const showDiscount = hasDiscount(discount);
-
-const serviceIcons = ["office", "cargo", "helmet"];
 
 const hasOrder = brandData.services.some((s) => s.order !== undefined);
 
@@ -57,45 +53,41 @@ function isFeatured(service: (typeof sortedServices)[0]): boolean {
 
           if (isFeatured) {
             return (
-              <div class="grid grid-cols-1 md:grid-cols-[170px_1fr] lg:grid-cols-[330px_1fr] gap-6 lg:gap-6 mb-10 lg:mb-6">
-                <div class="max-md:order-last flex max-md:justify-center max-md:pl-20 aspect-square rounded-[20px] lg:rounded-[40px] add-gradient">
+              <div class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,1fr)] gap-6 mb-6 bg-white rounded-2xl">
+                <div class="flex flex-col gap-5 p-4 md:p-10 lg:p-15">
+                  <h3 class="mb-6 typo-h5-x2">{service.name}</h3>
+                  <p class="typo-t3 text-text-secondary text-balance">
+                    {service.description ||
+                      "С ежедневной оплатой для стройки, склада, погрузки и уборки. Доступные срочно и без посредников"}
+                  </p>
+                  <div class="mt-5">
+                    <Button href={`/${service.url.toLowerCase()}`} variant="primary" text={`от ${discountedPrice} ₽`} />
+                  </div>
+                </div>
+
+                <div
+                  class={`flex w-[min(350px,100%)] justify-center m-3 bg-[#F2F4FA] aspect-square rounded-full justify-self-center ${index === 1 ? "self-start" : "self-end"}`}
+                >
                   <img
                     src={`/images/service-${index + 1}.webp`}
                     alt={`Изображение для услуги ${service.name}`}
-                    class="max-w-max pointer-events-none"
+                    class={`h-full max-w-max pointer-events-none ${
+                      index === 0 ? "translate-y-3 translate-x-[-10%]" : index === 1 ? "-translate-y-3" : "translate-y-3"
+                    }`}
                     loading="lazy"
                   />
-                </div>
-
-                <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-20 md:pl-25 lg:pl-45">
-                  <div>
-                    <h3 class="mb-6 typo-h4-x2">{service.name}</h3>
-                    <p class="typo-t3 text-text-secondary text-balance">
-                      {service.description ||
-                        "С ежедневной оплатой для стройки, склада, погрузки и уборки. Доступные срочно и без посредников"}
-                    </p>
-                  </div>
-
-                  <div class="shrink-0">
-                    <Button href={`/${service.url.toLowerCase()}`} variant="secondary" text={`от ${discountedPrice} ₽`} />
-                  </div>
                 </div>
               </div>
             );
           }
 
           return (
-            <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-20 py-10 border-t border-t-outline">
-              <div class="flex-1">
-                <h3 class="mb-6 typo-h4-x2">{service.name}</h3>
-                <p class="typo-t3 text-text-secondary text-balance">
-                  {service.description || "С ежедневной оплатой для стройки, склада, погрузки и уборки. Доступные срочно и без посредников"}
-                </p>
-              </div>
-
-              <div class="shrink-0">
-                <Button href={`/${service.url.toLowerCase()}`} variant="secondary" text={`от ${discountedPrice} ₽`} />
-              </div>
+            <div class="grid grid-cols-1 md:grid-cols-[1fr_1.3fr_auto] gap-6 md:gap-20 py-10 not-last:border-b not-last:border-b-outline">
+              <h3 class="typo-h5-x2">{service.name}</h3>
+              <p class="typo-t3 text-text-secondary text-balance">
+                {service.description || "С ежедневной оплатой для стройки, склада, погрузки и уборки. Доступные срочно и без посредников"}
+              </p>
+              <Button href={`/${service.url.toLowerCase()}`} variant="primary" text={`от ${discountedPrice} ₽`} />
             </div>
           );
         })

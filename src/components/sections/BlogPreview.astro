@@ -20,9 +20,9 @@ const blog = brandData.articles?.slice(0, 3) || [
 
 <section class="blog py-8 md:py-10 lg:py-20" data-cmp="BlogPreview">
   <div class="container">
-    <div class="_blog-inner">
-      <h2 class="_blog-title mb-8 md:12 lg:mb-16 typo-h2">Наш блог</h2>
-      <div class="_blog-grid grid-cols-[1fr_1fr_1fr] gap-4">
+    <div class="">
+      <h2 class=" mb-8 md:12 lg:mb-16 typo-h3-x2">Наш блог</h2>
+      <div class="grid-cols-[1fr_1fr_1fr] gap-4">
         {
           blog.map((blogpost: any) => (
             <article class="_blogpost flex flex-col items-start gap-4 text-left">

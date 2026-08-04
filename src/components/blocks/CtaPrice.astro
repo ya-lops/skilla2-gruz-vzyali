@@ -15,12 +15,12 @@ const { price, discountedPrice, showDiscount } = getGlobalMinPriceWithDiscount(b
 ---
 
 <section class="flex flex-col gap-10 p-6 lg:p-10 h-full text-cta-text" data-cmp="CtaPrice">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-    <div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 h-full">
+    <div class="flex flex-col h-full">
       <p class="">Стоимость наших сотрудников</p>
       <div class="_price mt-6 font-heading">
         <span class="uppercase">от</span>
-        <span class="typo-h3-x2">
+        <span class="typo-h5-x2">
           {
             brandData.main?.adv_price && Number(brandData.main.adv_price) > 0
               ? brandData.main.adv_price
@@ -31,14 +31,16 @@ const { price, discountedPrice, showDiscount } = getGlobalMinPriceWithDiscount(b
         </span>
         <span class="uppercase">₽/час</span>
       </div>
-    </div>
-    <div class="max-lg:order-first h-[120px] lg:h-0 flex items-end lg:items-start justify-center lg:translate-x-[20%] lg:translate-y-[-110px]">
-      <img src="/images/calc-result.webp" alt="" class="lg:max-w-max pointer-events-none"/>
-    </div>
-  </div>
 
-  <div class="flex max-lg:flex-col lg:items-center gap-6 lg:justify-between mt-auto pt-10 border-t border-t-outline/10">
-    <p class="max-w-[20rem]">Свяжитесь с нами и мы расчитаем точную стоимость под ваши задачи</p>
-    <Button class="shrink-0 lg:ml-auto" href="#kp" variant="accent" text="Получить КП" />
+      <div class="flex flex-col items-start gap-6 mt-auto pt-10 border-t border-t-outline/10">
+        <p class="max-w-[20rem]">Свяжитесь с нами и мы расчитаем точную стоимость под ваши задачи</p>
+        <Button class="shrink-0" href="#kp" variant="accent" text="Получить КП" />
+      </div>
+    </div>
+    <div
+      class="flex items-end lg:items-start justify-center"
+    >
+      <img src="/images/calc-result.webp" alt="" class="pointer-events-none" />
+    </div>
   </div>
 </section>
