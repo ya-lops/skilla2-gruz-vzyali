@@ -15,6 +15,9 @@
   --color-surface-secondary-inverse: hsla(225, 44%, 96%, 1);
   --color-surface-blur: hsla(240, 3%, 15%, 0.75);
 
+  --color-surface-input: #176ABD;
+  --color-text-input: var(--color-text-primary-inverse);
+
   --color-button-surface-primary: hsla(210, 68%, 50%, 1);
   --color-button-surface-accent: hsla(348, 76%, 46%, 1);
   --color-button-border: transparent;

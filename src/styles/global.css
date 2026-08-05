@@ -50,7 +50,7 @@
   font-family: var(--site-font-heading);
   font-weight: 600;
   font-size: clamp(3rem, 1.5036rem + 6.385vw, 6.25rem);
-  line-height: 90%;
+  line-height: 110%;
 }
 
 @utility typo-h3 {
@@ -64,7 +64,7 @@
   font-family: var(--site-font-heading);
   font-weight: 700;
   font-size: clamp(2.5rem, 1.8838rem + 2.6292vw, 4.25rem);
-  line-height: 90%;
+  line-height: 110%;
 }
 
 @utility typo-h4 {

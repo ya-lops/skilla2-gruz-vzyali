@@ -20,7 +20,7 @@ const { price, discountedPrice, showDiscount } = getGlobalMinPriceWithDiscount(b
 
 <section id="calc" class="py-8 md:py-10 lg:py-20 overflow-clip scroll-mt-25" data-cmp="CalculatorForm">
   <div class="container">
-    <h2 class="max-w-180 mb-15 typo-h3-x2 uppercase">Калькулятор стоимости вашего персонала</h2>
+    <h2 class="max-w-230 mb-15 typo-h3-x2 uppercase">Калькулятор стоимости вашего персонала</h2>
 
     <div x-data="employeeCostCalculator()">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-7">
@@ -62,7 +62,7 @@ const { price, discountedPrice, showDiscount } = getGlobalMinPriceWithDiscount(b
               <span>₽</span>/час
             </p>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-10 pt-10 border-t border-t-outline *:flex *:flex-col *:gap-2">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-7 lg:gap-10 mt-10 pt-10 border-t border-t-outline *:flex *:flex-col *:gap-2">
               <CalculatorFormResultYoursFields />
             </div>
           </div>

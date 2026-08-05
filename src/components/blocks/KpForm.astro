@@ -4,9 +4,9 @@ import FormInputKp from "@/components/ui/FormInputKp.astro";
 import FormCheckbox from "@/components/ui/FormCheckbox.astro";
 ---
 
-<div x-data="kpForm()" class="relative" data-cmp="KpForm">
+<div x-data="kpForm()" class="relative max-w-[800px]" data-cmp="KpForm">
   <form class="flex flex-col gap-10" @submit.prevent="submitForm()" novalidate>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 max-w-160">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
       <FormInputKp id="kp-name" label="Имя" model="form.name" errorModel="errors.name" required />
       <FormInputKp id="kp-phone" type="tel" label="Телефон" model="form.phone" errorModel="errors.phone" required />
       <FormInputKp id="kp-email" type="email" label="Почта" model="form.email" errorModel="errors.email" required />

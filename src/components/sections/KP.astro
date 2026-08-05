@@ -9,17 +9,17 @@ interface Props {
 const { brandData } = Astro.props;
 ---
 
-<section id="kp" class="scroll-mt-25 my-10 bg-kp-surface" data-cmp="KP">
+<section id="kp" class="scroll-mt-25 bg-kp-surface overflow-clip" data-cmp="KP">
   <div class="container">
-    <div class="grid grid-cols-1 xl:grid-cols-[1fr_1fr] items-center">
-      <div class="">
-        <h2 class="typo-h5-x2 uppercase text-kp-text">Бесплатно сделаем коммерческое предложение</h2>
+    <div class="grid grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,1.2fr)] items-center">
+      <div class="py-10 lg:py-25">
+        <h2 class="typo-h3-x2 uppercase text-kp-text">Бесплатно сделаем коммерческое предложение</h2>
         <div class="mt-20">
           <KpForm />
         </div>
       </div>
-      <div class="flex justify-center items-end">
-        <img src="/images/kp-image.webp" alt="" class="pointer-events-none" />
+      <div class="flex justify-center items-end self-end">
+        <img src="/images/kp-image.webp" alt="" class="lg:max-w-max pointer-events-none" />
       </div>
     </div>
   </div>

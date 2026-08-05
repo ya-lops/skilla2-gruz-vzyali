@@ -27,7 +27,7 @@ const {
     x-model={model}
     @focus="focused = true"
     @blur="focused = false"
-    class="peer w-full h-[70px] px-4 pt-6 pb-2 border rounded-2xl bg-surface-primary outline-none transition-all"
+    class="peer w-full h-[70px] px-4 pt-6 pb-2 border rounded-2xl bg-surface-input text-text-input outline-none transition-all"
     :class={`${errorModel} ? 'border-red-600' : focused ? 'border-accent' : 'border-transparent'`}
     placeholder=" "
     {...rest}
@@ -37,7 +37,7 @@ const {
     class="absolute left-4 top-1/2 -translate-y-1/2 typo-t4 transition-all pointer-events-none select-none
            peer-focus:top-3 peer-focus:translate-y-0 peer-focus:typo-label
            peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:typo-label"
-    :class={`${errorModel} ? '!text-red-600' : focused ? '!text-accent' : 'text-text-tertiary'`}
+    :class={`${errorModel} ? '!text-red-600' : focused ? '!text-text-input' : 'text-text-input'`}
   >
     {label}
   </label>
