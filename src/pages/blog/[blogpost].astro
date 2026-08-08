@@ -2,15 +2,15 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import KP from "@/components/sections/KP.astro";
 import Breadcrumbs from "@/components/ui/Breadcrumbs.astro";
+import Blog from "@/components/sections/Blog.astro";
 
 import { getBrandData } from "@/lib/api";
-import Blog from "@/components/sections/Blog.astro";
 
 const { blogpost } = Astro.params;
 
 const brandData = await getBrandData();
 
-const article = brandData.articles.find((a) => a.url === blogpost);
+const article = brandData.blogs?.find((b) => b.url === blogpost);
 
 if (!article) {
   return Astro.rewrite("/404");
@@ -20,88 +20,50 @@ if (!article) {
 <BaseLayout
   {brandData}
   metaTitle={article.meta_title || article.title}
-  metaDescription={article.description}
-  metaKeywords={article.keywords}
+  metaDescription={article.meta_description || article.subtitle || ''}
+  metaKeywords={article.meta_keywords || ''}
 >
-  <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Блог", href: "/blog" }, { label: article.title }]} />
+  <Breadcrumbs
+    items={[
+      { label: "Главная", href: "/" },
+      { label: "Блог", href: "/blog" },
+      { label: article.title },
+    ]}
+  />
 
-  <article class="blogpost py-8 md:py-10 lg:py-20" data-page="blogpost">
+  <article 
+    class="blogpost py-8 md:py-10 lg:py-20" 
+    data-page="blogpost"
+    itemscope 
+    itemtype="https://schema.org/BlogPosting"
+  >
+    <meta itemprop="datePublished" content={article.date_create} />
+    <meta itemprop="url" content={`/blog/${article.url}`} />
+    {article.cover && <meta itemprop="image" content={article.cover} />}
+    
     <div class="container">
       <div class="_blogpost-inner max-w-[57.5rem] mx-auto">
-        <time class="_blogpost-date typo-label text-text-tertiary block mb-3" datetime={article.date_create}>
+        <time class="_blogpost-date typo-label text-text-tertiary block mb-3" datetime={article.date_create} itemprop="datePublished">
           {article.date_create}
         </time>
 
-        <h1 class="_blogpost-title typo-h1-x2 mb-8">{article.title}</h1>
+        <h1 class="_blogpost-title typo-h2 mb-8" itemprop="name">{article.title}</h1>
 
-        <!-- Рыба -->
-        <p>
-          Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике безопасности
-          и с гарантией. Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике
-          безопасности и с гарантией.
-        </p>
+        {article.cover && (
+          <img 
+            src={article.cover} 
+            alt={article.title}
+            class="rounded-3xl w-full"
+            itemprop="image"
+          />
+        )}
 
-        <img src="/images/blogpost-1.webp" alt="" />
-
-        <h2>Подзаголовок</h2>
-
-        <p>
-          Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике безопасности
-          и с гарантией. Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике
-          безопасности и с гарантией.
-        </p>
-
-        <p>
-          Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике безопасности
-          и с гарантией. Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике
-          безопасности и с гарантией.
-        </p>
-
-        <img src="/images/blogpost-1.webp" alt="" />
-
-        <h2>Подзаголовок</h2>
-
-        <p>
-          Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике безопасности
-          и с гарантией. Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике
-          безопасности и с гарантией.
-        </p>
-
-        <p>
-          Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике безопасности
-          и с гарантией. Любой сложности: подъем сейфов, станков, промышленного оборудования. Наши мастера СМР работают строго по технике
-          безопасности и с гарантией.
-        </p>
-
-        <img src="/images/blogpost-1.webp" alt="" />
-
-        <h2>Нумерованный список</h2>
-        <ol>
-          <li>Только граждане РФ;</li>
-          <li>Ответственность, пунктуальность и исполнительность;</li>
-          <li>Постоянная работа или работа на разовых заказах;</li>
-          <li>Работа разъездная в разных районах города;</li>
-          <li>Возможно совмещение, подработка в свободное время;</li>
-          <li>Есть работа во всех районах города.</li>
-        </ol>
-
-        <h2>Маркированный список</h2>
-        <ul>
-          <li>Только граждане РФ;</li>
-          <li>Ответственность, пунктуальность и исполнительность;</li>
-          <li>Постоянная работа или работа на разовых заказах;</li>
-          <li>Работа разъездная в разных районах города;</li>
-          <li>Возможно совмещение, подработка в свободное время;</li>
-          <li>Есть работа во всех районах города.</li>
-        </ul>
-
-        <!-- Убрать рыбу и оставить это -->
-        <!-- <div class="_blogpost-content prose max-w-none" set:html={article.content} /> -->
+        <div class="_blogpost-content prose max-w-none" set:html={article.content} itemprop="articleBody" />
       </div>
     </div>
   </article>
 
-  <Blog {brandData} showLast/>
+  <Blog {brandData} showLast />
 
   <KP {brandData} />
 </BaseLayout>
@@ -111,11 +73,11 @@ if (!article) {
 
   [data-page="blogpost"] {
     & :where(h1, h2, h3, h4, h5, h6, ul, ol, img):not(._blogpost-title) {
-      @apply mt-8 lg:mt-20;
+      @apply mt-8 lg:mt-15;
     }
 
     & p {
-      @apply typo-t1 max-w-[45.625rem] mt-6 font-normal;
+      @apply max-w-[45.625rem] mt-6 font-normal;
     }
 
     & img {
@@ -123,7 +85,7 @@ if (!article) {
     }
 
     & :where(ol, ul) {
-      @apply list-inside typo-t1 mt-6;
+      @apply list-inside mt-4;
 
       li {
         @apply mt-2 text-text-secondary;

@@ -1,5 +1,5 @@
 ---
-import type { BrandData } from "@/types/brand";
+import type { BrandData, BlogPost } from "@/types/brand";
 import Button from "@/components/ui/Button.astro";
 
 interface Props {
@@ -12,28 +12,59 @@ const { brandData, showLast = false } = Astro.props;
 const currentPath = Astro.url?.pathname || "";
 const isBlogPage = currentPath === "/blog";
 
-const articles = showLast ? brandData.articles?.slice(0, 3) : brandData.articles;
+const posts = showLast ? brandData.blogs?.slice(0, 3) : brandData.blogs;
+
+const defaultCover = brandData.default.blog_default_cover;
 ---
 
-<section class="py-8 md:py-10 lg:py-20" data-cmp="Blog">
+<section class="py-8 md:py-10 lg:py-25" data-cmp="Blog" itemscope itemtype="https://schema.org/Blog">
+  <meta itemprop="name" content={showLast ? "Последние статьи" : "Наш блог"} />
+
   <div class="container">
-    <h2 class="typo-h3-x2 mb-8 md:12 lg:mb-16 typo-h5-x2 uppercase">Наш блог</h2>
+    <h2 class="mb-8 md:12 lg:mb-16 typo-h2" itemprop="name">
+      {showLast ? "Последние статьи" : "Наш блог"}
+    </h2>
 
     {
-      articles?.length > 0 ? (
+      posts?.length > 0 ? (
         <>
           <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-4">
-            {articles.map((blogpost: any) => (
-              <article class="flex flex-col items-start gap-4 text-left">
-                <a class="contents" href={`/blog/${blogpost.url}`}>
-                  {blogpost.imagePreview ? (
-                    <img src={blogpost.imagePreview} alt={`Превью-изображение для записи блога ${blogpost.title}`} loading="lazy" class="pointer-events-none"/>
-                  ) : (
-                    <div class="w-full rounded-2xl bg-gray-200 aspect-video" />
-                  )}
+            {posts.map((blogpost: BlogPost, index: number) => (
+              <article itemscope itemtype="https://schema.org/BlogPosting" itemprop="blogPost">
+                <meta itemprop="position" content={String(index + 1)} />
+                <meta itemprop="datePublished" content={blogpost.date_create} />
 
-                  <h3 class="px-4 typo-h4 text-left">{blogpost.title || "Запись блога"}</h3>
-                  <p class="px-4 typo-t3">{blogpost.description || ""}</p>
+                <a
+                  class="flex flex-col items-start gap-4 text-left hover:[&_img]:scale-105 [&_img]:transition-transform"
+                  href={`/blog/${blogpost.url}`}
+                  itemprop="url"
+                >
+                  <div class="flex h-full aspect-1280/720 rounded-2xl overflow-clip">
+                    {blogpost.cover ? (
+                      <img
+                        src={blogpost.cover}
+                        alt={blogpost.title}
+                        loading="lazy"
+                        class="pointer-events-none h-full w-full object-cover"
+                        itemprop="image"
+                      />
+                    ) : (
+                      <img
+                        src={defaultCover}
+                        alt=""
+                        class="pointer-events-none h-full w-full object-cover"
+                        loading="lazy"
+                        itemprop="image"
+                      />
+                    )}
+                  </div>
+
+                  <h3 class="px-4 typo-h4 text-left" itemprop="name">
+                    {blogpost.title || "Запись блога"}
+                  </h3>
+                  <p class="px-4 typo-t3" itemprop="description">
+                    {blogpost.subtitle || ""}
+                  </p>
                   <div class="px-4 typo-label">{blogpost.date_create || ""}</div>
                 </a>
               </article>

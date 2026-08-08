@@ -11,28 +11,23 @@ export interface BrandDefault {
   ks: string;
   bank: string;
   rs: string;
+  blog_default_cover: string;
 }
 
 export interface SocialLink {
-  telegram?: string;    
+  telegram?: string;
+  youtube?: string;
   instagram?: string;
-  youtube?: string; 
-  vk?: string;      
-  rutube?: string;  
-  dzen?: string;    
+  vk?: string;
+  rutube?: string;
+  dzen?: string;
 }
 
 export interface MessengerLink {
-  vk?: string;   
+  vk?: string;
   telegram?: string;
   max?: string;
   whatsapp?: string;
-}
-
-export interface ReplacementPhone {
-  yandex?: string;
-  google?: string;
-  '2gis'?: string;
 }
 
 export interface SiteAction {
@@ -66,7 +61,7 @@ export interface BrandMain {
   adv_price_percent: string;
   site_social_links: SocialLink[];
   site_messenger_links: MessengerLink[];
-  site_replacement_phones: ReplacementPhone[];
+  site_replacement_phones: { yandex?: string }[];
   site_actions: SiteAction[];
   site_documents: SiteDocument[];
 }
@@ -77,7 +72,7 @@ export interface SubService {
   id: number;
   name: string;
   price: string;
-  unit: string | null;
+  unit: string;
 }
 
 export interface Service {
@@ -85,9 +80,9 @@ export interface Service {
   name: string;
   description: string | null;
   url: string;
+  order: number | null;
   is_active: number;
   services: SubService[];
-  order?: any;
 }
 
 // ============ Счетчики ============
@@ -136,12 +131,12 @@ export interface Vacancies {
 // ============ Контент страниц ============
 
 export interface Content {
-  id: number;
+  name: string;
   url: string;
   content: string;
 }
 
-// ============ Статьи ============
+// ============ Статьи (старый блог) ============
 
 export interface Article {
   id: number;
@@ -154,7 +149,21 @@ export interface Article {
   content: string;
 }
 
-// ============ Новый тип: Города на карте ============
+// ============ Блог (новый) ============
+
+export interface BlogPost {
+  title: string;
+  cover: string | null;
+  subtitle: string | null;
+  date_create: string;
+  content: string;
+  meta_title: string;
+  meta_description: string | null;
+  meta_keywords: string | null;
+  url: string;
+}
+
+// ============ Города на карте ============
 
 export interface MapCity {
   city: string;
@@ -181,5 +190,6 @@ export interface BrandData {
   vacancies: Vacancies;
   contents: Content[];
   articles: Article[];
+  blogs: BlogPost[];
   map_coordinates: MapCoordinates;
 }
